@@ -1,0 +1,48 @@
+{
+    "deporte": "Basquet",
+    "probabilidades": "",
+    "equipos": [
+      {
+        "nombre": "Equipo 1",
+        "formacion": "1-2-2",
+        "jugadores": [
+          {
+            "nombre": "Jugador 1"
+          },
+          {
+            "nombre": "Jugador 2"
+          },
+          {
+            "nombre": "Jugador 3"
+          },
+          {
+            "nombre": "Jugador 4"
+          },
+          {
+            "nombre": "Jugador 5"        
+          }
+        ]
+      },
+      {
+        "nombre": "Equipo 2",
+        "formacion": "3-1-1",
+        "jugadores": [
+          {
+            "nombre": "Jugador 6"        
+          },
+          {
+            "nombre": "Jugador 7"
+          },
+          {
+            "nombre": "Jugador 8"
+          },
+          {
+            "nombre": "Jugador 9"
+          },
+          {
+            "nombre": "Jugador 10"
+          }
+        ]
+      }
+    ]
+  }

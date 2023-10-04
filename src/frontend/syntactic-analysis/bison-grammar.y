@@ -21,6 +21,14 @@
 	int factor;
 	int constant;
 	int sportvalue;
+	int sportline;
+	int oddsline;
+	int teamsline;
+	int formationline;
+	int nameline;
+	int team;
+	int playersline;
+	int playerline;
 
 	// Terminales.
 	token token;
@@ -41,10 +49,23 @@
 %token <token> RCURLY
 %token <token> SPORT
 %token <token> COLON
+%token <token> SEMICOLON
 %token <token> HOCKEY
 %token <token> FUTBOL
 %token <token> BASQUET
+%token <token> COMMA
+%token <token> ODDS
+%token <token> ODDSPERCENTAGES
+%token <token> ARRAY_START
+%token <token> ARRAY_END
+%token <token> TEAMS
+%token <token> TEAM_NAME
+%token <token> FORMATION
+%token <token> PLAYER_LIST
+%token <token> PLAYER_NAME
+%token <token> FORMATIONNUMBER
 
+%token <token> STRING
 %token <integer> INTEGER
 
 // Tipos de dato para los no-terminales generados desde Bison.
@@ -53,6 +74,16 @@
 %type <factor> factor
 %type <constant> constant
 %type <sportvalue> sportvalue
+%type <oddsline> oddsline
+%type <sportline> sportline
+%type <team> team
+%type <nameline> nameline
+%type <teamsline> teamsline
+%type <formationline> formationline
+%type <playersline> playersline
+%type <playerline> playerline
+
+
 
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
@@ -67,20 +98,31 @@
 program: expression													{ $$ = ProgramGrammarAction($1); }
 	;
 
-expression: expression[left] ADD expression[right]					{ $$ = AdditionExpressionGrammarAction($left, $right); }
-	| expression[left] SUB expression[right]						{ $$ = SubtractionExpressionGrammarAction($left, $right); }
-	| expression[left] MUL expression[right]						{ $$ = MultiplicationExpressionGrammarAction($left, $right); }
-	| expression[left] DIV expression[right]						{ $$ = DivisionExpressionGrammarAction($left, $right); }
-	| factor														{ $$ = FactorExpressionGrammarAction($1); }
+expression: LCURLY expression RCURLY								{ $$ = ExpressionFactorGrammarAction($2); }
+	| LCURLY sportline COMMA oddsline COMMA teamsline RCURLY		{ $$ = Return0();}
 	;
 
-factor: LCURLY expression RCURLY									{ $$ = ExpressionFactorGrammarAction($2); }
-	| LCURLY SPORT COLON sportvalue RCURLY							{ $$ = Return0();}
-	;
+
+sportline:  SPORT COLON sportvalue									{ $$ = Return0();}
 
 sportvalue:    BASQUET                                       		{ $$ = Return0();}
 	| FUTBOL													  	{ $$ = Return0();}
 	| HOCKEY														{ $$ = Return0();}
 	;
+
+oddsline: ODDS COLON ODDSPERCENTAGES								{ $$ = Return0();}
+	;
+
+teamsline: TEAMS COLON ARRAY_START team COMMA team ARRAY_END 		{ $$ = Return0();}
+	;
+
+team: LCURLY nameline COMMA formationline COMMA playersline RCURLY	{ $$ = Return0();}
+
+nameline: TEAM_NAME COLON STRING									{ $$ = Return0();}
+
+formationline: FORMATION COLON FORMATIONNUMBER						{ $$ = Return0();}
+
+playersline: PLAYER_LIST COLON ARRAY_START playerline ARRAY_END		{ $$ = Return0();}
+playerline: LCURLY PLAYER_NAME COLON STRING RCURLY /*COMMA*/		{ $$ = Return0();}
 
 %%

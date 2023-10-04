@@ -46,11 +46,20 @@ token RCurlyPatternAction() {
 }
 
 token ColonPatternAction() {
-	LogDebug("[Flex] RCurlyPatternAction: ':'.");
+	LogDebug("[Flex] ColonPatternAction: ':'.");
 	yylval.token = COLON;
 	return COLON;
 }
-
+token SemicolonPatternAction() {
+	LogDebug("[Flex] SemicolonPatternAction: ';'.");
+	yylval.token = SEMICOLON;
+	return SEMICOLON;
+}
+token CommaPatternAction() {
+	LogDebug("[Flex] CommaPatternAction: ','.");
+	yylval.token = COMMA;
+	return COMMA;
+}
 token DivisionOperatorPatternAction() {
 	LogDebug("[Flex] DivisionOperatorPatternAction: '/'.");
 	yylval.token = DIV;
@@ -107,3 +116,57 @@ token SportAction() {
 	yylval.token = SPORT;
 	return SPORT;
 }
+
+token OddsAction(){
+	LogDebug("[Flex] OddsAction: '-'.");
+	yylval.token = ODDS;
+	return ODDS;
+}
+
+
+token TeamAction(){
+	LogDebug("[Flex] TeamAction: '-'.");
+	yylval.token = TEAMS;
+	return TEAMS;
+}
+
+token TeamNameAction(){
+	LogDebug("[Flex] TeamNameAction: '-'.");
+	yylval.token = TEAM_NAME;
+	return TEAM_NAME;
+}
+
+token PlayerNameAction(){
+	LogDebug("[Flex] PlayerNameAction: '-'.");
+	yylval.token = PLAYER_NAME;
+	return PLAYER_NAME;
+}
+
+token PlayerListAction(){
+	LogDebug("[Flex] PlayerNameAction: '-'.");
+	yylval.token = PLAYER_LIST;
+	return PLAYER_LIST;
+}
+
+token ArrayStartAction(){
+	LogDebug("[Flex] ArrayStartAction: '-'.");
+	yylval.token = ARRAY_START;
+	return ARRAY_START;
+}
+
+token ArrayEndAction(){
+	LogDebug("[Flex] ArrayEndAction: '-'.");
+	yylval.token = ARRAY_END;
+	return ARRAY_END;
+}
+
+token FormationAction(){
+	LogDebug("[Flex] FormationAction: '-'.");
+	yylval.token = FORMATION;
+	return FORMATION;
+}
+
+token StringAction(const char * match){
+	yylval.string = (char*) match;
+	return STRING;
+};

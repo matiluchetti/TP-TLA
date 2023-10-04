@@ -33,6 +33,12 @@ token LCurlyPatternAction();
 token ColonPatternAction();
 token SubtractionOperatorPatternAction();
 token SportAction();
+token OddsAction();
+token CommaPatternAction();
+token TeamAction();
+token ArrayStartAction();
+token ArrayEndAction();
+token StringAction();
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);
