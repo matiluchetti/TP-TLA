@@ -20,10 +20,12 @@
 	int expression;
 	int factor;
 	int constant;
+	int sportvalue;
 
 	// Terminales.
 	token token;
 	int integer;
+	char * string; 
 }
 
 // Un token que jamás debe ser usado en la gramática.
@@ -35,8 +37,13 @@
 %token <token> MUL
 %token <token> DIV
 
-%token <token> OPEN_PARENTHESIS
-%token <token> CLOSE_PARENTHESIS
+%token <token> LCURLY
+%token <token> RCURLY
+%token <token> SPORT
+%token <token> COLON
+%token <token> HOCKEY
+%token <token> FUTBOL
+%token <token> BASQUET
 
 %token <integer> INTEGER
 
@@ -45,6 +52,8 @@
 %type <expression> expression
 %type <factor> factor
 %type <constant> constant
+%type <sportvalue> sportvalue
+
 
 // Reglas de asociatividad y precedencia (de menor a mayor).
 %left ADD SUB
@@ -65,11 +74,13 @@ expression: expression[left] ADD expression[right]					{ $$ = AdditionExpression
 	| factor														{ $$ = FactorExpressionGrammarAction($1); }
 	;
 
-factor: OPEN_PARENTHESIS expression CLOSE_PARENTHESIS				{ $$ = ExpressionFactorGrammarAction($2); }
-	| constant														{ $$ = ConstantFactorGrammarAction($1); }
+factor: LCURLY expression RCURLY									{ $$ = ExpressionFactorGrammarAction($2); }
+	| LCURLY SPORT COLON sportvalue RCURLY							{ $$ = Return0();}
 	;
 
-constant: INTEGER													{ $$ = IntegerConstantGrammarAction($1); }
+sportvalue:    BASQUET                                       		{ $$ = Return0();}
+	| FUTBOL													  	{ $$ = Return0();}
+	| HOCKEY														{ $$ = Return0();}
 	;
 
 %%

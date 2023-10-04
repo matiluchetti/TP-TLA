@@ -39,10 +39,16 @@ token AdditionOperatorPatternAction() {
 	return ADD;
 }
 
-token CloseParenthesisPatternAction() {
-	LogDebug("[Flex] CloseParenthesisPatternAction: ')'.");
-	yylval.token = CLOSE_PARENTHESIS;
-	return CLOSE_PARENTHESIS;
+token RCurlyPatternAction() {
+	LogDebug("[Flex] RCurlyPatternAction: '}'.");
+	yylval.token = RCURLY;
+	return RCURLY;
+}
+
+token ColonPatternAction() {
+	LogDebug("[Flex] RCurlyPatternAction: ':'.");
+	yylval.token = COLON;
+	return COLON;
 }
 
 token DivisionOperatorPatternAction() {
@@ -65,10 +71,10 @@ token MultiplicationOperatorPatternAction() {
 	return MUL;
 }
 
-token OpenParenthesisPatternAction() {
-	LogDebug("[Flex] OpenParenthesisPatternAction: '('.");
-	yylval.token = OPEN_PARENTHESIS;
-	return OPEN_PARENTHESIS;
+token LCurlyPatternAction() {
+	LogDebug("[Flex] LCurlyPatternAction: '{'.");
+	yylval.token = LCURLY;
+	return LCURLY;
 }
 
 token SubtractionOperatorPatternAction() {
@@ -94,4 +100,10 @@ void IgnoredPatternAction(const char * lexeme, const int length) {
 	free(lexemeCopy);
 	// Como no debe hacer nada con el patrón, solo se loguea en consola.
 	// No se emite ningún token.
+}
+
+token SportAction() {
+	LogDebug("[Flex] SportAction: '-'.");
+	yylval.token = SPORT;
+	return SPORT;
 }

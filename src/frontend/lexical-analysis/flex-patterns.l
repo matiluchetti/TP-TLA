@@ -33,8 +33,16 @@ whitespace		[ \f\n\r\t\v]
 "*"											{ return MultiplicationOperatorPatternAction(yytext); }
 "/"											{ return DivisionOperatorPatternAction(yytext); }
 
-"("											{ return OpenParenthesisPatternAction(yytext); }
-")"											{ return CloseParenthesisPatternAction(yytext); }
+"{"											{ return LCurlyPatternAction(yytext); }
+"}"											{ return RCurlyPatternAction(yytext); }
+":"                                         { return ColonPatternAction(yytext); }
+"Hockey"                                    {  return HOCKEY; }
+"Basquet"                                   {  return BASQUET; }
+"Futbol"                                    {  return FUTBOL; }
+
+"\"deporte\""                             { return SportAction(yytext); }
+
+
 
 {digit}+									{ return IntegerPatternAction(yytext, yyleng); }
 

@@ -25,17 +25,20 @@ void EndCommentPatternAction();
 
 // Patrones terminales del lenguaje diseñado.
 token AdditionOperatorPatternAction();
-token CloseParenthesisPatternAction();
+token RCurlyPatternAction();
 token DivisionOperatorPatternAction();
 token IntegerPatternAction(const char * lexeme, const int length);
 token MultiplicationOperatorPatternAction();
-token OpenParenthesisPatternAction();
+token LCurlyPatternAction();
+token ColonPatternAction();
 token SubtractionOperatorPatternAction();
+token SportAction();
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);
 
 // Regla que no hace nada, permite ignorar parte de la entrada.
 void IgnoredPatternAction(const char * lexeme, const int length);
+
 
 #endif
