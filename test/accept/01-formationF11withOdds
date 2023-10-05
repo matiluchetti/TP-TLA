@@ -7,37 +7,37 @@
       "formacion": "4-5-1",
       "jugadores": [
         {
-          "nombre": "Jugador 1"
+          "jugador": "Jugador 1"
         },
         {
-          "nombre": "Jugador 2"
+          "jugador": "Jugador 2"
         },
         {
-          "nombre": "Jugador 3"
+          "jugador": "Jugador 3"
         },
         {
-          "nombre": "Jugador 4"
+          "jugador": "Jugador 4"
         },
         {
-          "nombre": "Jugador 5"        
+          "jugador": "Jugador 5"        
         },
         {
-          "nombre": "Jugador 6"        
+          "jugador": "Jugador 6"        
         },
         {
-          "nombre": "Jugador 7"
+          "jugador": "Jugador 7"
         },
         {
-          "nombre": "Jugador 8"
+          "jugador": "Jugador 8"
         },
         { 
-          "nombre": "Jugador 9"
+          "jugador": "Jugador 9"
         },
         {
-          "nombre": "Jugador 10"
+          "jugador": "Jugador 10"
         },
         {
-          "nombre": "Jugador 11"
+          "jugador": "Jugador 11"
         }
       ]
     },
@@ -46,37 +46,37 @@
       "formacion": "3-5-2",
       "jugadores": [
         {
-          "nombre": "Jugador 12"
+          "jugador": "Jugador 12"
         },
         {
-          "nombre": "Jugador 13"
+          "jugador": "Jugador 13"
         },
         {
-          "nombre": "Jugador 14"
+          "jugador": "Jugador 14"
         },
         {
-          "nombre": "Jugador 15"
+          "jugador": "Jugador 15"
         },
         {
-          "nombre": "Jugador 16"
+          "jugador": "Jugador 16"
         },
         {
-          "nombre": "Jugador 17"
+          "jugador": "Jugador 17"
         },
         {
-          "nombre": "Jugador 18"
+          "jugador": "Jugador 18"
         },
         {
-          "nombre": "Jugador 19"
+          "jugador": "Jugador 19"
         },
         {
-          "nombre": "Jugador 20"
+          "jugador": "Jugador 20"
         },
         {
-          "nombre": "Jugador 21"
+          "jugador": "Jugador 21"
         },
         {
-          "nombre": "Jugador 22"
+          "jugador": "Jugador 22"
         }
       ]
     }

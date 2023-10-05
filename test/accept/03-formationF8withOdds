@@ -1,5 +1,5 @@
 {
-  "deporte": "Fútbol",
+  "deporte": "Futbol",
   "probabilidades": "50-30-20",
   "equipos": [
     {
@@ -7,28 +7,28 @@
       "formacion": "2-3-2",
       "jugadores": [
         {
-          "nombre": "Jugador 1"
+          "jugador": "Jugador 1"
         },
         {
-          "nombre": "Jugador 2"
+          "jugador": "Jugador 2"
         },
         {
-          "nombre": "Jugador 3"
+          "jugador": "Jugador 3"
         },
         {
-          "nombre": "Jugador 4"
+          "jugador": "Jugador 4"
         },
         {
-          "nombre": "Jugador 5"        
+          "jugador": "Jugador 5"        
         },
         {
-          "nombre": "Jugador 6"        
+          "jugador": "Jugador 6"        
         },
         {
-          "nombre": "Jugador 7"
+          "jugador": "Jugador 7"
         },
         {
-          "nombre": "Jugador 8"
+          "jugador": "Jugador 8"
         }
       ]
     },
@@ -37,28 +37,28 @@
       "formacion": "3-3-1",
       "jugadores": [
         {
-          "nombre": "Jugador 9"
+          "jugador": "Jugador 9"
         },
         {
-          "nombre": "Jugador 10"
+          "jugador": "Jugador 10"
         },
         {
-          "nombre": "Jugador 11"
+          "jugador": "Jugador 11"
         },
         {
-          "nombre": "Jugador 12"
+          "jugador": "Jugador 12"
         },
         {
-          "nombre": "Jugador 13"
+          "jugador": "Jugador 13"
         },
         {
-          "nombre": "Jugador 14"
+          "jugador": "Jugador 14"
         },
         {
-          "nombre": "Jugador 15"
+          "jugador": "Jugador 15"
         },
         {
-          "nombre": "Jugador 16"
+          "jugador": "Jugador 16"
         }
       ]
     }

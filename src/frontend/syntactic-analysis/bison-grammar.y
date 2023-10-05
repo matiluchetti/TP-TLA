@@ -19,16 +19,29 @@
 	int program;
 	int expression;
 	int factor;
-	int constant;
-	int sportvalue;
-	int sportline;
 	int oddsline;
-	int teamsline;
-	int formationline;
 	int nameline;
-	int team;
-	int playersline;
 	int playerline;
+
+
+	int eightformationline;
+	int fiveformationline;
+	int threeformationline;
+
+	int fivesportvalue;
+	int eightsportvalue;
+
+	int threeteamsline;
+	int fiveteamsline;
+	int eightteamsline;
+
+	int threeplayersline;
+	int fiveplayersline;
+	int eightplayersline;
+
+	int eightteam;
+	int fiveteam;
+	int threeteam;
 
 	// Terminales.
 	token token;
@@ -63,7 +76,9 @@
 %token <token> FORMATION
 %token <token> PLAYER_LIST
 %token <token> PLAYER_NAME
-%token <token> FORMATIONNUMBER
+%token <token> EIGHTFORMATIONNUMBER
+%token <token> THREEFORMATIONNUMBER
+%token <token> FIVEFORMATIONNUMBER
 
 %token <token> STRING
 %token <integer> INTEGER
@@ -72,23 +87,31 @@
 %type <program> program
 %type <expression> expression
 %type <factor> factor
-%type <constant> constant
-%type <sportvalue> sportvalue
 %type <oddsline> oddsline
-%type <sportline> sportline
-%type <team> team
 %type <nameline> nameline
-%type <teamsline> teamsline
-%type <formationline> formationline
-%type <playersline> playersline
 %type <playerline> playerline
 
+%type <eightformationline> eightformationline
+%type <fiveformationline> fiveformationline
+%type <threeformationline> threeformationline
+
+%type <eightsportvalue> eightsportvalue
+%type <fivesportvalue> fivesportvalue
+
+%type <threeteamsline> threeteamsline
+%type <fiveteamsline> fiveteamsline
+%type <eightteamsline> eightteamsline
+
+%type <threeplayersline> threeplayersline
+%type <fiveplayersline> fiveplayersline
+%type <eightplayersline> eightplayersline
+
+%type <eightteam> eightteam
+%type <fiveteam> fiveteam
+%type <threeteam> threeteam
 
 
 
-// Reglas de asociatividad y precedencia (de menor a mayor).
-%left ADD SUB
-%left MUL DIV
 
 // El símbolo inicial de la gramatica.
 %start program
@@ -98,31 +121,85 @@
 program: expression													{ $$ = ProgramGrammarAction($1); }
 	;
 
-expression: LCURLY expression RCURLY								{ $$ = ExpressionFactorGrammarAction($2); }
-	| LCURLY sportline COMMA oddsline COMMA teamsline RCURLY		{ $$ = Return0();}
+expression: 
+	LCURLY SPORT COLON fivesportvalue COMMA oddsline 
+		 fiveteamsline RCURLY									{ $$ = Return0();}
+	| LCURLY SPORT COLON eightsportvalue COMMA oddsline
+		 eightteamsline RCURLY 								{ $$ = Return0();}
+	| LCURLY SPORT COLON BASQUET COMMA oddsline						
+		 threeteamsline RCURLY 								{ $$ = Return0();}
+	;
+
+//deportes que aceptan formacion de 8 y de 11
+eightsportvalue: HOCKEY												{ $$ = Return0();}	
+	| FUTBOL														{ $$ = Return0();}	
+	;
+
+//deportes que aceptan formacion de 5
+fivesportvalue: BASQUET												{ $$ = Return0();}
+	| FUTBOL														{ $$ = Return0();}
+	;
+
+	
+oddsline: ODDS COLON ODDSPERCENTAGES COMMA						{ $$ = Return0();}
+	| %empty
 	;
 
 
-sportline:  SPORT COLON sportvalue									{ $$ = Return0();}
-
-sportvalue:    BASQUET                                       		{ $$ = Return0();}
-	| FUTBOL													  	{ $$ = Return0();}
-	| HOCKEY														{ $$ = Return0();}
+fiveteamsline: TEAMS COLON ARRAY_START fiveteam COMMA fiveteam ARRAY_END 		{ $$ = Return0();}
 	;
 
-oddsline: ODDS COLON ODDSPERCENTAGES								{ $$ = Return0();}
+	
+threeteamsline: TEAMS COLON ARRAY_START threeteam COMMA threeteam ARRAY_END	{ $$ = Return0();}
 	;
 
-teamsline: TEAMS COLON ARRAY_START team COMMA team ARRAY_END 		{ $$ = Return0();}
+
+eightteamsline: TEAMS COLON ARRAY_START eightteam COMMA eightteam ARRAY_END	{ $$ = Return0();}
+	;
+	
+
+eightteam: LCURLY nameline COMMA eightformationline COMMA eightplayersline RCURLY	{ $$ = Return0();}
 	;
 
-team: LCURLY nameline COMMA formationline COMMA playersline RCURLY	{ $$ = Return0();}
+fiveteam: LCURLY nameline COMMA fiveformationline COMMA fiveplayersline RCURLY	{ $$ = Return0();}
+	;
+
+threeteam: LCURLY nameline COMMA threeformationline COMMA threeplayersline RCURLY	{ $$ = Return0();}
+	;
 
 nameline: TEAM_NAME COLON STRING									{ $$ = Return0();}
+	;
 
-formationline: FORMATION COLON FORMATIONNUMBER						{ $$ = Return0();}
+eightformationline: FORMATION COLON EIGHTFORMATIONNUMBER						{ $$ = Return0();}
+	;
+fiveformationline: FORMATION COLON FIVEFORMATIONNUMBER						{ $$ = Return0();}
+	;
+threeformationline: FORMATION COLON THREEFORMATIONNUMBER						{ $$ = Return0();}
+	;
 
-playersline: PLAYER_LIST COLON ARRAY_START playerline ARRAY_END		{ $$ = Return0();}
-playerline: LCURLY PLAYER_NAME COLON STRING RCURLY /*COMMA*/		{ $$ = Return0();}
+/* formacion 11 y 8*/
+eightplayersline: PLAYER_LIST COLON ARRAY_START playerline COMMA  		
+		playerline COMMA playerline COMMA playerline COMMA 
+		playerline COMMA playerline COMMA playerline COMMA 
+		playerline COMMA playerline COMMA playerline COMMA 
+		playerline ARRAY_END										{ $$ = Return0();}
+	|	PLAYER_LIST COLON ARRAY_START playerline COMMA playerline 	
+		COMMA playerline COMMA playerline COMMA playerline COMMA playerline
+		COMMA playerline COMMA playerline ARRAY_END	{ $$ = Return0();}
+	;
+
+/* formacion 5*/
+fiveplayersline: PLAYER_LIST COLON ARRAY_START playerline COMMA  		
+		playerline COMMA playerline COMMA playerline COMMA 
+		playerline ARRAY_END										{ $$ = Return0();}
+	;
+
+/* formacion 3*/
+threeplayersline: PLAYER_LIST COLON ARRAY_START playerline COMMA  		
+		playerline COMMA playerline ARRAY_END						{ $$ = Return0();}
+	;
+
+playerline: LCURLY PLAYER_NAME COLON STRING RCURLY 		{ $$ = Return0();}
+
 
 %%

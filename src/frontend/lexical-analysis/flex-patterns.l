@@ -48,8 +48,11 @@ string          \"[A-Za-z0-9 ]+\"
 "\"Futbol\""                                    { return FUTBOL; }
 
 "\"probabilidades\""                        { return OddsAction(); }
-\"[0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"      { return ODDSPERCENTAGES;}
-\"[0-9]-[0-9]-[0-9]\"                       { return FORMATIONNUMBER;}
+\"[0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"        { return ODDSPERCENTAGES;}
+\"[1-5]-[1-5]-[1-5]\"                       { return EIGHTFORMATIONNUMBER;}
+\"[1-5]-[1-5]-[1-5]\"                       { return FIVEFORMATIONNUMBER;}
+\"[1-5]-[1-5]-[1-5]\"                       { return THREEFORMATIONNUMBER;}
+
 
 "\"equipos\""                               { return TeamAction();}
 "\"nombre\""                                { return TeamNameAction();}

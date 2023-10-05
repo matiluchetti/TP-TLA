@@ -1,5 +1,6 @@
 {
-  "deporte": "Futbol",
+  "deporte": "Basquet",
+  "probabilidades": "50-30-20",
   "equipos": [
     {
       "nombre": "Equipo 1",

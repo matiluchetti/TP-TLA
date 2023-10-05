@@ -1,5 +1,6 @@
 {
     "deporte": "Futbol",
+    "probabilidades": "60-20-20",
     "equipos": [
       {
         "nombre": "Equipo 1",
@@ -16,9 +17,6 @@
           },
           {
             "jugador": "Jugador 4"
-          },
-          {
-            "jugador": "Jugador 5"        
           }
         ]
       },
@@ -26,6 +24,9 @@
         "nombre": "Equipo 2",
         "formacion": "1-2-1",
         "jugadores": [
+          {
+            "jugador": "Jugador 5"        
+          },
           {
             "jugador": "Jugador 6"        
           },
@@ -37,9 +38,6 @@
           },
           {
             "jugador": "Jugador 9"
-          },
-          {
-            "jugador": "Jugador 10"
           }
         ]
       }
