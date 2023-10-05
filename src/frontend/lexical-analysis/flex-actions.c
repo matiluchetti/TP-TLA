@@ -143,7 +143,7 @@ token PlayerNameAction(){
 }
 
 token PlayerListAction(){
-	LogDebug("[Flex] PlayerNameAction: '-'.");
+	LogDebug("[Flex] PlayerListAction: '-'.");
 	yylval.token = PLAYER_LIST;
 	return PLAYER_LIST;
 }
@@ -169,4 +169,4 @@ token FormationAction(){
 token StringAction(const char * match){
 	yylval.string = (char*) match;
 	return STRING;
-};
+}

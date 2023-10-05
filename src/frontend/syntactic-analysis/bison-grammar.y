@@ -20,13 +20,9 @@
 	int expression;
 	int factor;
 	int oddsline;
+	int formationline;
 	int nameline;
 	int playerline;
-
-
-	int eightformationline;
-	int fiveformationline;
-	int threeformationline;
 
 	int fivesportvalue;
 	int eightsportvalue;
@@ -64,8 +60,12 @@
 %token <token> COLON
 %token <token> SEMICOLON
 %token <token> HOCKEY
+%token <token> FUTBOL11
+%token <token> FUTBOL8
+%token <token> FUTBOL5
 %token <token> FUTBOL
-%token <token> BASQUET
+%token <token> BASQUET3
+%token <token> BASQUET5
 %token <token> COMMA
 %token <token> ODDS
 %token <token> ODDSPERCENTAGES
@@ -76,9 +76,7 @@
 %token <token> FORMATION
 %token <token> PLAYER_LIST
 %token <token> PLAYER_NAME
-%token <token> EIGHTFORMATIONNUMBER
-%token <token> THREEFORMATIONNUMBER
-%token <token> FIVEFORMATIONNUMBER
+%token <token> FORMATIONNUMBER
 
 %token <token> STRING
 %token <integer> INTEGER
@@ -89,11 +87,8 @@
 %type <factor> factor
 %type <oddsline> oddsline
 %type <nameline> nameline
+%type <formationline> formationline
 %type <playerline> playerline
-
-%type <eightformationline> eightformationline
-%type <fiveformationline> fiveformationline
-%type <threeformationline> threeformationline
 
 %type <eightsportvalue> eightsportvalue
 %type <fivesportvalue> fivesportvalue
@@ -121,23 +116,23 @@
 program: expression													{ $$ = ProgramGrammarAction($1); }
 	;
 
-expression: 
-	LCURLY SPORT COLON fivesportvalue COMMA oddsline 
-		 fiveteamsline RCURLY									{ $$ = Return0();}
+expression: LCURLY SPORT COLON fivesportvalue COMMA oddsline 
+		fiveteamsline RCURLY									{ $$ = Return0();}
 	| LCURLY SPORT COLON eightsportvalue COMMA oddsline
 		 eightteamsline RCURLY 								{ $$ = Return0();}
-	| LCURLY SPORT COLON BASQUET COMMA oddsline						
+	| LCURLY SPORT COLON BASQUET3 COMMA oddsline						
 		 threeteamsline RCURLY 								{ $$ = Return0();}
 	;
 
 //deportes que aceptan formacion de 8 y de 11
 eightsportvalue: HOCKEY												{ $$ = Return0();}	
-	| FUTBOL														{ $$ = Return0();}	
+	| FUTBOL8														{ $$ = Return0();}	
+	| FUTBOL11														{ $$ = Return0();}
 	;
 
 //deportes que aceptan formacion de 5
-fivesportvalue: BASQUET												{ $$ = Return0();}
-	| FUTBOL														{ $$ = Return0();}
+fivesportvalue: BASQUET5												{ $$ = Return0();}
+	| FUTBOL5														{ $$ = Return0();}
 	;
 
 	
@@ -145,36 +140,28 @@ oddsline: ODDS COLON ODDSPERCENTAGES COMMA						{ $$ = Return0();}
 	| %empty
 	;
 
-
-fiveteamsline: TEAMS COLON ARRAY_START fiveteam COMMA fiveteam ARRAY_END 		{ $$ = Return0();}
+eightteamsline: TEAMS COLON ARRAY_START eightteam COMMA eightteam ARRAY_END	{ $$ = Return0();}
 	;
 
+fiveteamsline: TEAMS COLON ARRAY_START fiveteam COMMA fiveteam ARRAY_END	{ $$ = Return0();}
+	;
 	
 threeteamsline: TEAMS COLON ARRAY_START threeteam COMMA threeteam ARRAY_END	{ $$ = Return0();}
 	;
 
-
-eightteamsline: TEAMS COLON ARRAY_START eightteam COMMA eightteam ARRAY_END	{ $$ = Return0();}
-	;
-	
-
-eightteam: LCURLY nameline COMMA eightformationline COMMA eightplayersline RCURLY	{ $$ = Return0();}
+eightteam: LCURLY nameline COMMA formationline COMMA eightplayersline RCURLY	{ $$ = Return0();}
 	;
 
-fiveteam: LCURLY nameline COMMA fiveformationline COMMA fiveplayersline RCURLY	{ $$ = Return0();}
+fiveteam: LCURLY nameline COMMA formationline COMMA fiveplayersline RCURLY	{ $$ = Return0();}
 	;
 
-threeteam: LCURLY nameline COMMA threeformationline COMMA threeplayersline RCURLY	{ $$ = Return0();}
+threeteam: LCURLY nameline COMMA formationline COMMA threeplayersline RCURLY	{ $$ = Return0();}
 	;
 
 nameline: TEAM_NAME COLON STRING									{ $$ = Return0();}
 	;
 
-eightformationline: FORMATION COLON EIGHTFORMATIONNUMBER						{ $$ = Return0();}
-	;
-fiveformationline: FORMATION COLON FIVEFORMATIONNUMBER						{ $$ = Return0();}
-	;
-threeformationline: FORMATION COLON THREEFORMATIONNUMBER						{ $$ = Return0();}
+formationline: FORMATION COLON FORMATIONNUMBER						{ $$ = Return0();}
 	;
 
 /* formacion 11 y 8*/
@@ -185,13 +172,12 @@ eightplayersline: PLAYER_LIST COLON ARRAY_START playerline COMMA
 		playerline ARRAY_END										{ $$ = Return0();}
 	|	PLAYER_LIST COLON ARRAY_START playerline COMMA playerline 	
 		COMMA playerline COMMA playerline COMMA playerline COMMA playerline
-		COMMA playerline COMMA playerline ARRAY_END	{ $$ = Return0();}
+		COMMA playerline COMMA playerline ARRAY_END					{ $$ = Return0();}
 	;
 
 /* formacion 5*/
 fiveplayersline: PLAYER_LIST COLON ARRAY_START playerline COMMA  		
-		playerline COMMA playerline COMMA playerline COMMA 
-		playerline ARRAY_END										{ $$ = Return0();}
+		playerline COMMA playerline COMMA playerline COMMA playerline ARRAY_END		{ $$ = Return0();}
 	;
 
 /* formacion 3*/

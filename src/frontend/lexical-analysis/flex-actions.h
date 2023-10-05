@@ -31,14 +31,19 @@ token IntegerPatternAction(const char * lexeme, const int length);
 token MultiplicationOperatorPatternAction();
 token LCurlyPatternAction();
 token ColonPatternAction();
+token SemicolonPatternAction();
 token SubtractionOperatorPatternAction();
 token SportAction();
 token OddsAction();
 token CommaPatternAction();
 token TeamAction();
+token TeamNameAction();
+token PlayerListAction();
+token PlayerNameAction();
 token ArrayStartAction();
 token ArrayEndAction();
-token StringAction();
+token StringAction(const char * lexeme);
+token FormationAction();
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);
