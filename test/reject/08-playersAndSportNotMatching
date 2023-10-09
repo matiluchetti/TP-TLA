@@ -1,5 +1,5 @@
 {
-  "deporte": "Futbol 11",
+  "deporte": "Hockey",
   "probabilidades": "50-30-20",
   "equipos": [
     {
@@ -14,6 +14,7 @@
         },
         {
           "jugador": "Jugador 3"
+                
         },
         {
           "jugador": "Jugador 4"
@@ -30,14 +31,11 @@
         {
           "jugador": "Jugador 8"
         },
-        { 
+        {
           "jugador": "Jugador 9"
         },
         {
           "jugador": "Jugador 10"
-        },
-        {
-          "jugador": "Jugador 11"
         }
       ]
     },
@@ -74,6 +72,9 @@
         },
         {
           "jugador": "Jugador 21"
+        },
+        {
+          "jugador": "Jugador 22"
         }
       ]
     }

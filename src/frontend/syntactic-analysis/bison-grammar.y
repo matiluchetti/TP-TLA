@@ -18,7 +18,6 @@
 	// No-terminales (frontend).
 	int program;
 	int expression;
-	int factor;
 	int oddsline;
 	int formationline;
 	int nameline;
@@ -84,7 +83,6 @@
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <program> program
 %type <expression> expression
-%type <factor> factor
 %type <oddsline> oddsline
 %type <nameline> nameline
 %type <formationline> formationline

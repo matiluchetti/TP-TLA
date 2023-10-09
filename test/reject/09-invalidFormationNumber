@@ -1,10 +1,10 @@
 {
-  "deporte": "Futbol 8",
+  "deporte": "Futbol 11",
   "probabilidades": "50-30-20",
   "equipos": [
     {
       "nombre": "Equipo 1",
-      "formacion": "2-3-2",
+      "formacion": "4-5-1-3",
       "jugadores": [
         {
           "jugador": "Jugador 1"
@@ -22,18 +22,15 @@
           "jugador": "Jugador 5"        
         },
         {
-          "jugador": "Jugador 6"
+          "jugador": "Jugador 6"        
         },
         {
           "jugador": "Jugador 7"
-        }
-      ]
-    },
-    {
-      "nombre": "Equipo 2",
-      "formacion": "3-3-1",
-      "jugadores": [
+        },
         {
+          "jugador": "Jugador 8"
+        },
+        { 
           "jugador": "Jugador 9"
         },
         {
@@ -41,7 +38,13 @@
         },
         {
           "jugador": "Jugador 11"
-        },
+        }
+      ]
+    },
+    {
+      "nombre": "Equipo 2",
+      "formacion": "3-5-2",
+      "jugadores": [
         {
           "jugador": "Jugador 12"
         },
@@ -56,6 +59,24 @@
         },
         {
           "jugador": "Jugador 16"
+        },
+        {
+          "jugador": "Jugador 17"
+        },
+        {
+          "jugador": "Jugador 18"
+        },
+        {
+          "jugador": "Jugador 19"
+        },
+        {
+          "jugador": "Jugador 20"
+        },
+        {
+          "jugador": "Jugador 21"
+        },
+        {
+          "jugador": "Jugador 22"
         }
       ]
     }
