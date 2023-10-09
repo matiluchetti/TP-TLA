@@ -1,8 +1,102 @@
-[![✗](https://img.shields.io/badge/Release-v0.3.0-ffb600.svg?style=for-the-badge)](https://github.com/agustin-golmar/Flex-Bison-Compiler/releases)
+# Sport JSON Parser
 
-# Compilador Flex/Bison
+Un compilador para crear formaciones de deportes a partir de un JSON.
 
-Un compilador vacío de ejemplo construido con Flex y Bison.
+## Grupo
+* Mariano Agopian (62317)
+* Matias Luchetti (62337)
+* Sofia Altman (62030)
+* Santiago Medin (62076)
+
+## Sintaxis
+
+* {
+* "deporte" : "Futbol 5 || Futbol 8 || Futbol 11 ||  Hockey 8 || Hockey 11 || Basquet 3 || Basquet 5 "
+* "probabilidades" : "XX-XX-XX" (linea opcional, donde XX es un entero de dos digitos)
+* "equipos": [
+*       {
+        "nombre": "Equipo 1",
+        "formacion": "X-X-X" (donde cada X es un digito),
+        "jugadores": [
+          {
+            "jugador": "Jugador 1"
+          }, 
+        {
+            "jugador": "Jugador 2"
+        } (repetido la cantidad de veces correspondiente a la cantidad de jugadores mencionadas en el deporte)
+        ]
+      },
+      {  
+        "nombre": "Equipo 1",
+        "formacion": "X-X-X" (donde cada X es un digito),
+        "jugadores": [
+          {
+            "jugador": "Jugador 1"
+          }, 
+        {
+            "jugador": "Jugador 2"
+        } (repetido la cantidad de veces correspondiente a la cantidad de jugadores mencionadas en el deporte)
+        ]
+      }
+    ]
+}
+
+
+
+Observaciones: los whitespaces son ignorados, la cantidad de elementos dentro de jugadores debe coincidir con el deporte elegido
+
+Ejemplo : (puede encontrar los casos de  en la carpeta de tests): 
+
+```
+{
+    "deporte": "Futbol 5",
+    "probabilidades": "60-20-20",
+    "equipos": [
+      {
+        "nombre": "Equipo 1",
+        "formacion": "2-2-1",
+        "jugadores": [
+          {
+            "jugador": "Jugador 1"
+          },
+          {
+            "jugador": "Jugador 2"
+          },
+          {
+            "jugador": "Jugador 3"
+          },
+          {
+            "jugador": "Jugador 4"
+          },
+          {
+            "jugador": "Jugador 5"        
+          }
+        ]
+      },
+      {
+        "nombre": "Equipo 2",
+        "formacion": "1-2-1",
+        "jugadores": [
+          {
+            "jugador": "Jugador 6"        
+          },
+          {
+            "jugador": "Jugador 7"
+          },
+          {
+            "jugador": "Jugador 8"
+          },
+          {
+            "jugador": "Jugador 9"
+          },
+          {
+            "jugador": "Jugador 10"
+          }
+        ]
+      }
+    ]
+  }
+```
 
 ## Requerimientos
 
@@ -38,7 +132,42 @@ Luego se deberá abrir la solución generada `bin\Compiler.sln` con el IDE _Micr
 Para compilar un programa, primero cree un archivo vacío denominado `program` (o el nombre que desee), con el siguiente contenido:
 
 ```
-123123 + 123 - 2 * (454 + 890 / 89)
+{
+    "deporte": "Basquet 3",
+    "probabilidades": "30-40-30",
+    "equipos": [
+      {
+        "nombre": "Equipo 1",
+        "formacion": "1-2",
+        "jugadores": [
+          {
+            "jugador": "Jugador 1"
+          },
+          {
+            "jugador": "Jugador 2"
+          },
+          {
+            "jugador": "Jugador 3"
+          }
+        ]
+      },
+      {
+        "nombre": "Equipo 2",
+        "formacion": "2-1",
+        "jugadores": [
+          {
+            "jugador": "Jugador 4"        
+          },
+          {
+            "jugador": "Jugador 5"
+          },
+          {
+            "jugador": "Jugador 6"
+          }
+        ]
+      }
+    ]
+  }
 ```
 
 Luego, ejecute el compilador desde el directorio raíz del proyecto, o desde cualquier otro lugar indicando el path hacia el script `start.sh` y pasando por parámetro el path hacia el programa a compilar:
@@ -53,7 +182,6 @@ En Windows:
 user@machine:path/ $ script\start.bat program
 ```
 
-Debería obtener el resultado correcto de evaluar el programa anterior: `122318`.
 
 ## Testing
 
