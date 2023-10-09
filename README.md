@@ -10,11 +10,12 @@ Un compilador para crear formaciones de deportes a partir de un JSON.
 
 ## Sintaxis
 
-* {
-* "deporte" : "Futbol 5 || Futbol 8 || Futbol 11 ||  Hockey 8 || Hockey 11 || Basquet 3 || Basquet 5 "
-* "probabilidades" : "XX-XX-XX" (linea opcional, donde XX es un entero de dos digitos)
-* "equipos": [
-*       {
+```
+ {
+ "deporte" : "Futbol 5 || Futbol 8 || Futbol 11 ||  Hockey 8 || Hockey 11 || Basquet 3 || Basquet 5 "
+ "probabilidades" : "XX-XX-XX" (linea opcional, donde XX es un entero de dos digitos)
+ "equipos": [
+       {
         "nombre": "Equipo 1",
         "formacion": "X-X-X" (donde cada X es un digito),
         "jugadores": [
@@ -41,6 +42,7 @@ Un compilador para crear formaciones de deportes a partir de un JSON.
     ]
 }
 
+```
 
 
 Observaciones: los whitespaces son ignorados, la cantidad de elementos dentro de jugadores debe coincidir con el deporte elegido
