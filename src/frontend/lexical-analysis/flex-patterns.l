@@ -28,10 +28,6 @@ string          \"[A-Za-z0-9 ]+\"
 <COMMENT>{endline}+							{ IgnoredPatternAction(yytext, yyleng); }
 <COMMENT>"*/"								{ EndCommentPatternAction(); BEGIN(INITIAL); }
 
-"+"											{ return AdditionOperatorPatternAction(yytext); }
-"-"											{ return SubtractionOperatorPatternAction(yytext); }
-"*"											{ return MultiplicationOperatorPatternAction(yytext); }
-"/"											{ return DivisionOperatorPatternAction(yytext); }
 
 "["                                         { return ArrayStartAction(yytext);}
 "]"                                         { return ArrayEndAction(yytext);}

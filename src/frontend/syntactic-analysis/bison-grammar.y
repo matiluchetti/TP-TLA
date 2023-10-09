@@ -48,10 +48,6 @@
 %token <token> ERROR
 
 // IDs y tipos de los tokens terminales generados desde Flex.
-%token <token> ADD
-%token <token> SUB
-%token <token> MUL
-%token <token> DIV
 
 %token <token> LCURLY
 %token <token> RCURLY

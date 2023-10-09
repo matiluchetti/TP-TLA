@@ -33,12 +33,6 @@ void EndCommentPatternAction() {
 	LogDebug("[Flex] [COMMENT] EndCommentPatternAction..............................");
 }
 
-token AdditionOperatorPatternAction() {
-	LogDebug("[Flex] AdditionOperatorPatternAction: '+'.");
-	yylval.token = ADD;
-	return ADD;
-}
-
 token RCurlyPatternAction() {
 	LogDebug("[Flex] RCurlyPatternAction: '}'.");
 	yylval.token = RCURLY;
@@ -60,11 +54,6 @@ token CommaPatternAction() {
 	yylval.token = COMMA;
 	return COMMA;
 }
-token DivisionOperatorPatternAction() {
-	LogDebug("[Flex] DivisionOperatorPatternAction: '/'.");
-	yylval.token = DIV;
-	return DIV;
-}
 
 token IntegerPatternAction(const char * lexeme, const int length) {
 	LogDebug("[Flex] IntegerPatternAction: '%s' (length = %d).", lexeme, length);
@@ -74,11 +63,6 @@ token IntegerPatternAction(const char * lexeme, const int length) {
 	return INTEGER;
 }
 
-token MultiplicationOperatorPatternAction() {
-	LogDebug("[Flex] MultiplicationOperatorPatternAction: '*'.");
-	yylval.token = MUL;
-	return MUL;
-}
 
 token LCurlyPatternAction() {
 	LogDebug("[Flex] LCurlyPatternAction: '{'.");
@@ -86,11 +70,6 @@ token LCurlyPatternAction() {
 	return LCURLY;
 }
 
-token SubtractionOperatorPatternAction() {
-	LogDebug("[Flex] SubtractionOperatorPatternAction: '-'.");
-	yylval.token = SUB;
-	return SUB;
-}
 
 token UnknownPatternAction(const char * lexeme, const int length) {
 	char * lexemeCopy = copyLexeme(lexeme, length);
