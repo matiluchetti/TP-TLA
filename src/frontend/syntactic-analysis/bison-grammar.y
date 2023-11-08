@@ -110,76 +110,28 @@
 program: expression													{ $$ = ProgramGrammarAction($1); }
 	;
 
-expression: LCURLY SPORT COLON fivesportvalue COMMA oddsline 
-		fiveteamsline RCURLY									{ $$ = Return0();}
-	| LCURLY SPORT COLON eightsportvalue COMMA oddsline
-		 eightteamsline RCURLY 								{ $$ = Return0();}
-	| LCURLY SPORT COLON BASQUET3 COMMA oddsline						
-		 threeteamsline RCURLY 								{ $$ = Return0();}
-	;
-
-//deportes que aceptan formacion de 8 y de 11
-eightsportvalue: HOCKEY												{ $$ = Return0();}	
-	| FUTBOL8														{ $$ = Return0();}	
-	| FUTBOL11														{ $$ = Return0();}
-	;
-
-//deportes que aceptan formacion de 5
-fivesportvalue: BASQUET5												{ $$ = Return0();}
-	| FUTBOL5														{ $$ = Return0();}
-	;
-
+expression: LCURLY SPORT COLON SPORTVALUE COMMA oddsline 
+		teamsline RCURLY									{ $$ = SportGrammarAction($4, $6 ,$7);}
 	
-oddsline: ODDS COLON ODDSPERCENTAGES COMMA						{ $$ = Return0();}
-	| %empty
-	;
-
-eightteamsline: TEAMS COLON ARRAY_START eightteam COMMA eightteam ARRAY_END	{ $$ = Return0();}
-	;
-
-fiveteamsline: TEAMS COLON ARRAY_START fiveteam COMMA fiveteam ARRAY_END	{ $$ = Return0();}
+oddsline: ODDS COLON ODDSPERCENTAGES COMMA						{ $$ = OddsGrammarAction($3);}
+	| %empty													{ $$ = NoOddsGrammarAction();}
 	;
 	
-threeteamsline: TEAMS COLON ARRAY_START threeteam COMMA threeteam ARRAY_END	{ $$ = Return0();}
+teamsline: TEAMS COLON ARRAY_START team COMMA team ARRAY_END	{ $$ = MatchGrammarAction($4,$6)}
 	;
 
-eightteam: LCURLY nameline COMMA formationline COMMA eightplayersline RCURLY	{ $$ = Return0();}
+team: LCURLY nameline COMMA formationline COMMA playerline RCURLY	{ $$ = TeamGrammarAction($2, $4,$6);}
 	;
 
-fiveteam: LCURLY nameline COMMA formationline COMMA fiveplayersline RCURLY	{ $$ = Return0();}
+nameline: TEAM_NAME COLON STRING									{ $$ = TeamNameGrammarAction($3);}
 	;
 
-threeteam: LCURLY nameline COMMA formationline COMMA threeplayersline RCURLY	{ $$ = Return0();}
+formationline: FORMATION COLON FORMATIONNUMBER						{ $$ = FormationGrammarAction($3);}
 	;
 
-nameline: TEAM_NAME COLON STRING									{ $$ = Return0();}
-	;
 
-formationline: FORMATION COLON FORMATIONNUMBER						{ $$ = Return0();}
-	;
-
-/* formacion 11 y 8*/
-eightplayersline: PLAYER_LIST COLON ARRAY_START playerline COMMA  		
-		playerline COMMA playerline COMMA playerline COMMA 
-		playerline COMMA playerline COMMA playerline COMMA 
-		playerline COMMA playerline COMMA playerline COMMA 
-		playerline ARRAY_END										{ $$ = Return0();}
-	|	PLAYER_LIST COLON ARRAY_START playerline COMMA playerline 	
-		COMMA playerline COMMA playerline COMMA playerline COMMA playerline
-		COMMA playerline COMMA playerline ARRAY_END					{ $$ = Return0();}
-	;
-
-/* formacion 5*/
-fiveplayersline: PLAYER_LIST COLON ARRAY_START playerline COMMA  		
-		playerline COMMA playerline COMMA playerline COMMA playerline ARRAY_END		{ $$ = Return0();}
-	;
-
-/* formacion 3*/
-threeplayersline: PLAYER_LIST COLON ARRAY_START playerline COMMA  		
-		playerline COMMA playerline ARRAY_END						{ $$ = Return0();}
-	;
-
-playerline: LCURLY PLAYER_NAME COLON STRING RCURLY 		{ $$ = Return0();}
+playerline: LCURLY PLAYER_NAME COLON STRING RCURLY COMMA playerline		{ $$ = PlayerGrammarAction($4,$7);}
+	|	LCURLY PLAYER_NAME COLON STRING RCURLY 							{ $$ = LastPlayerGrammarAction($4);}
 
 
 %%

@@ -6,14 +6,20 @@
 * auto-referenciarse, como es el caso de una "Expression", que está compuesta
 * de otras 2 expresiones.
 */
+typedef struct SportNode SportNode;
+typedef struct ProgramNode ProgramNode;
 typedef struct Expression Expression;
 typedef struct FormationNumberType FormationNumberType;
 typedef struct FormationNumberNode FormationNumberNode;
 typedef struct LineupNode LineupNode;
 typedef struct PlayerInfoNode PlayerInfoNode;
 typedef struct ProbabilityNode ProbabilityNode;
+typedef struct MatchNode MatchNode;
 typedef struct TeamNode TeamNode;
 typedef struct PlayerNode PlayerNode;
+typedef struct FormationNode FormationNode;
+typedef struct TeamNameNode TeamNameNode;
+typedef struct PlayerNameNode PlayerNameNode;
 
 
 /**
@@ -76,15 +82,21 @@ typedef enum {
 } SportType;
 
 typedef enum{
-	FORMATION_451,
-	FORMATION_352 //poner todos los tipos de formaciones
+	FORMATION_11,
+	FORMATION_8,
+	FORMATION_5,
+	FORMATION_3
 } FormationNumberType;
 
-typedef struct ProgramNode {
+struct ProgramNode{
+	struct SportNode * info;
+}ProgramNode;
+
+struct SportNode {
     SportType sport; 
     struct ProbabilityNode * probabilities; 
-    struct TeamNode *teams; // Pointer to the first team in the list
-} ProgramNode;
+    struct MatchNode * match; // Pointer to the first team in the list
+} SportNode;
 
 struct ProbabilityNode{
 	ProbabilityType type;
@@ -93,12 +105,25 @@ struct ProbabilityNode{
 	int t2_odds;
 }ProbabilityNode;
 
+struct MatchNode{
+	struct TeamNode * team1;
+	struct TeamNode * team2;
+}MatchNode;
+
 struct TeamNode {
-    char *teamName; // Team name (string)
-    FormationNumberType formation; 
+    struct TeamNameNode *teamName;
+    struct FormationNode *formation; 
     struct PlayerNode *players; // Pointer to the first player in the lineup
     struct TeamNode *nextTeam; // Pointer to the next team in the program
 }TeamNode;
+
+struct TeamNameNode{
+	char * teamName;
+}TeamNameNode;
+
+struct FormationNode{
+	FormationNumberType formation;
+}FormationNode;
 
 struct PlayerNode {
     char *playerName; // Player name (string)

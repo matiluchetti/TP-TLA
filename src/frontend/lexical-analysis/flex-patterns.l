@@ -39,12 +39,12 @@ string          \"[A-Za-z0-9 ]+\"
 ","                                         { return CommaPatternAction(yytext); }
 
 "\"deporte\""                               { return SportAction(yytext); }
-"\"Hockey\""                                { return HOCKEY; }
-"\"Basquet 3\""                               { return BASQUET3; }
-"\"Basquet 5\""                               { return BASQUET5; }
-"\"Futbol 5\""                                { return FUTBOL5; }
-"\"Futbol 8\""                                { return FUTBOL8; }
-"\"Futbol 11\""                                { return FUTBOL11; }
+"\"Hockey\""                                { return SPORTVALUE; }
+"\"Basquet 3\""                               { return SPORTVALUE; }
+"\"Basquet 5\""                               { return SPORTVALUE; }
+"\"Futbol 5\""                                { return SPORTVALUE; }
+"\"Futbol 8\""                                { return SPORTVALUE; }
+"\"Futbol 11\""                                { return SPORTVALUE; }
 
 "\"probabilidades\""                        { return OddsAction(); }
 \"[0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"        { return ODDSPERCENTAGES;}
