@@ -23,10 +23,6 @@ whitespace		[ \f\n\r\t\v]
 string          \"[A-Za-z0-9 ]+\"
 %%
 
-"/*"										{ BEGIN(COMMENT); BeginCommentPatternAction(); }
-<COMMENT>.									{ IgnoredPatternAction(yytext, yyleng); }
-<COMMENT>{endline}+							{ IgnoredPatternAction(yytext, yyleng); }
-<COMMENT>"*/"								{ EndCommentPatternAction(); BEGIN(INITIAL); }
 
 
 "["                                         { return ArrayStartAction(yytext);}
@@ -57,7 +53,7 @@ string          \"[A-Za-z0-9 ]+\"
 "\"jugador\""                               { return PlayerNameAction();}
 "\"formacion\""                             { return FormationAction();}
 
-{string}                                    { return StringAction(yytext);}
+{string}                                    { return StringAction(yytext, yyleng);}
 
 {digit}+									{ return IntegerPatternAction(yytext, yyleng); }
 

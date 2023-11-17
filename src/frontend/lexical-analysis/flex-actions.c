@@ -145,7 +145,9 @@ token FormationAction(){
 	return FORMATION;
 }
 
-token StringAction(const char * match){
-	yylval.string = (char*) match;
+token StringAction(const char * match, int yyleng){
+	char * number= calloc(length+1, sizeof(char));
+	strncpy(number, match, length);
+	yylval.string = (char*) number;
 	return STRING;
 }
