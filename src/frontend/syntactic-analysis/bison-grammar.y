@@ -14,8 +14,22 @@
 	Constant constant;
 	...
 	*/
+	FormationNumberType formationNumberType;
+	SportNode * sportNode;
+	ProgramNode * programNode;
+	FormationNumberNode * formationNumberNode;
+	LineupNode * lineupNode;
+	PlayerInfoNode * playerInfoNode;
+	ProbabilityNode * probabilityNode;
+	MatchNode * matchNode;
+	TeamNode * teamNode;
+	PlayerNode * playerNode;
+	FormationNode * formationNode;
+	TeamNameNode * teamNameNode;
+	PlayerNameNode * playerNameNode;
 
 	// No-terminales (frontend).
+	int initial;
 	int program;
 	int expression;
 	int oddsline;
@@ -26,17 +40,9 @@
 	int fivesportvalue;
 	int eightsportvalue;
 
-	int threeteamsline;
-	int fiveteamsline;
-	int eightteamsline;
+	int teamsline;
 
-	int threeplayersline;
-	int fiveplayersline;
-	int eightplayersline;
-
-	int eightteam;
-	int fiveteam;
-	int threeteam;
+	int team;
 
 	// Terminales.
 	token token;
@@ -52,9 +58,9 @@
 %token <token> LCURLY
 %token <token> RCURLY
 %token <token> SPORT
+%token <token> SPORTVALUE
 %token <token> COLON
 %token <token> SEMICOLON
-%token <token> HOCKEY
 %token <token> FUTBOL11
 %token <token> FUTBOL8
 %token <token> FUTBOL5
@@ -63,7 +69,7 @@
 %token <token> BASQUET5
 %token <token> COMMA
 %token <token> ODDS
-%token <token> ODDSPERCENTAGES
+
 %token <token> ARRAY_START
 %token <token> ARRAY_END
 %token <token> TEAMS
@@ -71,35 +77,25 @@
 %token <token> FORMATION
 %token <token> PLAYER_LIST
 %token <token> PLAYER_NAME
-%token <token> FORMATIONNUMBER
 
-%token <token> STRING
+
+%token <string> STRING
 %token <integer> INTEGER
+%token <string> FORMATIONNUMBER
+%token <string> ODDSPERCENTAGES
 
 // Tipos de dato para los no-terminales generados desde Bison.
-%type <program> program
-%type <expression> expression
-%type <oddsline> oddsline
-%type <nameline> nameline
-%type <formationline> formationline
-%type <playerline> playerline
-
-%type <eightsportvalue> eightsportvalue
-%type <fivesportvalue> fivesportvalue
-
-%type <threeteamsline> threeteamsline
-%type <fiveteamsline> fiveteamsline
-%type <eightteamsline> eightteamsline
-
-%type <threeplayersline> threeplayersline
-%type <fiveplayersline> fiveplayersline
-%type <eightplayersline> eightplayersline
-
-%type <eightteam> eightteam
-%type <fiveteam> fiveteam
-%type <threeteam> threeteam
+%type <programNode> program
+%type <sportNode> expression
+%type <probabilityNode> oddsline
+%type <teamNameNode> nameline
+%type <formationNumberType> formationline
+%type <playerNode> playerline
 
 
+%type <matchNode> teamsline
+
+%type <teamNode> team
 
 
 // El símbolo inicial de la gramatica.
@@ -112,12 +108,13 @@ program: expression													{ $$ = ProgramGrammarAction($1); }
 
 expression: LCURLY SPORT COLON SPORTVALUE COMMA oddsline 
 		teamsline RCURLY									{ $$ = SportGrammarAction($4, $6 ,$7);}
+	;
 	
 oddsline: ODDS COLON ODDSPERCENTAGES COMMA						{ $$ = OddsGrammarAction($3);}
 	| %empty													{ $$ = NoOddsGrammarAction();}
 	;
 	
-teamsline: TEAMS COLON ARRAY_START team COMMA team ARRAY_END	{ $$ = MatchGrammarAction($4,$6)}
+teamsline: TEAMS COLON ARRAY_START team COMMA team ARRAY_END	{ $$ = MatchGrammarAction($4,$6);}
 	;
 
 team: LCURLY nameline COMMA formationline COMMA playerline RCURLY	{ $$ = TeamGrammarAction($2, $4,$6);}
@@ -129,9 +126,9 @@ nameline: TEAM_NAME COLON STRING									{ $$ = TeamNameGrammarAction($3);}
 formationline: FORMATION COLON FORMATIONNUMBER						{ $$ = FormationGrammarAction($3);}
 	;
 
-
 playerline: LCURLY PLAYER_NAME COLON STRING RCURLY COMMA playerline		{ $$ = PlayerGrammarAction($4,$7);}
 	|	LCURLY PLAYER_NAME COLON STRING RCURLY 							{ $$ = LastPlayerGrammarAction($4);}
+	;
 
 
 %%
