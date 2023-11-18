@@ -92,11 +92,12 @@ struct MatchNode * MatchGrammarAction(struct TeamNode * team1, struct TeamNode *
 	return match;
 }
 
-struct TeamNode * TeamGrammarAction(char * name, FormationNumberType formation, int players){
+struct TeamNode * TeamGrammarAction(char * name, FormationNumberType formation, struct PlayerNode * players){
 	struct TeamNode * team = (struct TeamNode *) calloc(1, sizeof(struct TeamNode));
 	team->teamName = name;
 	team->players = players;
 	team->formation = formation;
+	addTeam(name);
 	return team;
 }
 
@@ -142,12 +143,14 @@ struct FormationNode * FormationGrammarAction(char * formation){
 struct PlayerNode * PlayerGrammarAction(char * name, struct PlayerNode * nextPlayer){
 	struct PlayerNode * player = (struct PlayerNode *) calloc(1, sizeof(struct PlayerNode));
 	player->playerName = name;
-	player->nextPlayer = nextPlayer;	
+	player->nextPlayer = nextPlayer;
+	addPlayer(name);	
 	return player;
 }
 struct PlayerNode * LastPlayerGrammarAction(char * name){
 	struct PlayerNode * player = (struct PlayerNode *) calloc(1, sizeof(struct PlayerNode));
 	player->playerName = name;
 	player->nextPlayer = NULL;
+	addPlayer(name);
 	return player;
 }
