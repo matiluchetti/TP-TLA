@@ -3,6 +3,7 @@
 #include "bison-actions.h"
 #include <stdio.h>
 #include <string.h>
+#include "../../backend/semantic-analysis/symbol-table.h"
 
 /**
  * Implementación de "bison-actions.h".
@@ -49,9 +50,9 @@ void yyerror(const char * string) {
 // 	return value;
 // }
 
-struct ProgramNode * ProgramGrammarAction(struct InfoNode * info){
-	struct ProgramNode * initial = (struct ProgramNode *) calloc(1, sizeof(struct ProgramNode));
-	initial->info = info;
+ProgramNode * ProgramGrammarAction(SportNode * sport){
+	ProgramNode * initial = ( ProgramNode *) calloc(1, sizeof( ProgramNode));
+	initial->info = sport;
 	state.succeed = true;
 	state.result = 15;
 	state.program = initial;
@@ -63,54 +64,57 @@ int Return0(){
 	return 0;
 }
 
-struct SportNode * SportGrammarAction(SportType selected_sport, struct ProbabilityNode * probabilities, struct MatchNode *match){
-	struct SportNode * sport = (struct SportNode *) calloc(1, sizeof(struct SportNode));
+ SportNode * SportGrammarAction(SportType selected_sport,  ProbabilityNode * probabilities,  MatchNode *match){
+	 SportNode * sport = ( SportNode *) calloc(1, sizeof( SportNode));
 	sport->sport = selected_sport;
 	sport->probabilities = probabilities;
 	sport->match = match;
 	return sport;
 }
 
-struct ProbabilityNode * OddsGrammarAction(char * odds){
-	struct ProbabilityNode * probabilities = (struct ProbabilityNode *) calloc(1, sizeof(struct ProbabilityNode));
+ ProbabilityNode * OddsGrammarAction(char * odds){
+	 ProbabilityNode * probabilities = ( ProbabilityNode *) calloc(1, sizeof( ProbabilityNode));
 	probabilities->type = PROBABILITY;
 	if(sscanf(odds, "%2d-%2d-%2d", &probabilities->t1_odds, &probabilities->tie_odds, &probabilities->t2_odds) != 3){
 		LogError("Error al parsear las probabilidades");
 	}
 	return probabilities;
 }
-struct ProbabilityNode * NoOddsGrammarAction(){
-	struct ProbabilityNode * probabilities = (struct ProbabilityNode *) calloc(1, sizeof(struct ProbabilityNode));
+
+ ProbabilityNode * NoOddsGrammarAction(){
+	 ProbabilityNode * probabilities = ( ProbabilityNode *) calloc(1, sizeof( ProbabilityNode));
 	probabilities->type = NO_PROBABILITY;
 	return probabilities;
 }
 
-struct MatchNode * MatchGrammarAction(struct TeamNode * team1, struct TeamNode * team2){
-	struct MatchNode * match = (struct MatchNode *) calloc(1, sizeof(struct MatchNode));
+ MatchNode * MatchGrammarAction( TeamNode * team1,  TeamNode * team2){
+	 MatchNode * match = ( MatchNode *) calloc(1, sizeof( MatchNode));
 	match->team1 = team1;
 	match->team2 = team2;
 	return match;
 }
 
-struct TeamNode * TeamGrammarAction(char * name, FormationNumberType formation, struct PlayerNode * players){
-	struct TeamNode * team = (struct TeamNode *) calloc(1, sizeof(struct TeamNode));
+ TeamNode * TeamGrammarAction(TeamNameNode * name, FormationNumberType formation,  PlayerNode * players){
+	 TeamNode * team = ( TeamNode *) calloc(1, sizeof( TeamNode));
 	team->teamName = name;
 	team->players = players;
-	team->formation = formation;
-	addTeam(name);
+	FormationNode * formationNode =  ( FormationNode *) calloc(1, sizeof( FormationNode));
+	formationNode->formation = formation;
+	team->formation = formationNode;
+	addTeam(name->teamName);
 	return team;
 }
 
-struct TeamNameNode * TeamNameGrammarAction(char * name){
-	struct TeamNameNode * teamName = (struct TeamNameNode *) calloc(1, sizeof(struct TeamNameNode));
+ TeamNameNode * TeamNameGrammarAction(char * name){
+	 TeamNameNode * teamName = ( TeamNameNode *) calloc(1, sizeof( TeamNameNode));
 	teamName->teamName = name;
 	return teamName;
 }
 
-struct FormationNode * FormationGrammarAction(char * formation){
-	struct FormationNode * formationNode = (struct FormationNode *) calloc(1, sizeof(struct FormationNode));
+FormationNumberType  FormationGrammarAction(char * formation){
+	FormationNode * formationNode = ( FormationNode *) calloc(1, sizeof( FormationNode));
 	int defenders, midfielders, forwards;
-	int a = sscanf(formation, "%d-%d-%d", defenders, midfielders, forwards);
+	int a = sscanf(formation, "%d-%d-%d", &defenders, &midfielders, &forwards);
 	if ( a == 3 ){
 		if(defenders + midfielders + forwards == 10){
 			formationNode->formation = FORMATION_11;
@@ -136,19 +140,18 @@ struct FormationNode * FormationGrammarAction(char * formation){
 	else{
 		LogError("Error al parsear la formacion");
 	}
-	formationNode->formation = formation;
-	return formationNode;
+	return formationNode->formation;
 }
 
-struct PlayerNode * PlayerGrammarAction(char * name, struct PlayerNode * nextPlayer){
-	struct PlayerNode * player = (struct PlayerNode *) calloc(1, sizeof(struct PlayerNode));
+ PlayerNode * PlayerGrammarAction(char * name,  PlayerNode * nextPlayer){
+	 PlayerNode * player = ( PlayerNode *) calloc(1, sizeof( PlayerNode));
 	player->playerName = name;
 	player->nextPlayer = nextPlayer;
 	addPlayer(name);	
 	return player;
 }
-struct PlayerNode * LastPlayerGrammarAction(char * name){
-	struct PlayerNode * player = (struct PlayerNode *) calloc(1, sizeof(struct PlayerNode));
+ PlayerNode * LastPlayerGrammarAction(char * name){
+	 PlayerNode * player = ( PlayerNode *) calloc(1, sizeof( PlayerNode));
 	player->playerName = name;
 	player->nextPlayer = NULL;
 	addPlayer(name);

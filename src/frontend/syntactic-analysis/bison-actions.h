@@ -4,7 +4,10 @@
 #include "../../backend/support/shared.h"
 #include "../../backend/semantic-analysis/abstract-syntax-tree.h"
 #include "../../backend/semantic-analysis/symbol-table.h"
-
+#include "../../backend/support/clist.h"
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 
 /**
  * Se definen las acciones a ejecutar sobre cada regla de producción de la
@@ -14,7 +17,6 @@
  */
 
 // Programa.
- int ProgramGrammarAction(const int value);
 
 // // Expresión.
 // int AdditionExpressionGrammarAction(const int leftValue, const int rightValue);
@@ -45,16 +47,16 @@
 * gramática, o lo que es lo mismo, que el programa pertenece al lenguaje.
 */
 
-struct ProgramNode * ProgramGrammarAction(struct InfoNode * info);
+ProgramNode * ProgramGrammarAction(SportNode * sport);
 int Return0();
-struct SportNode * SportGrammarAction(SportType sport, struct ProbabilityNode * probabilities, struct MatchNode *match);
-struct ProbabilityNode * OddsGrammarAction(char *odds);
-struct ProbabilityNode * NoOddsGrammarAction();
-struct MatchNode * MatchGrammarAction(struct TeamNode * team1, struct TeamNode * team2);
-struct TeamNode * TeamGrammarAction(char * name, FormationNumberType formation, int players);
-struct TeamNameNode * TeamNameGrammarAction(char * name);
-struct FormationNode * FormationGrammarAction(char * formation);
-struct PlayerNode * PlayerGrammarAction(char * name, struct PlayerNode * nextPlayer);
-struct PlayerNode * LastPlayerGrammarAction(char * name);
+SportNode * SportGrammarAction(SportType sport,  ProbabilityNode * probabilities,  MatchNode *match);
+ProbabilityNode * OddsGrammarAction(char *odds);
+ProbabilityNode * NoOddsGrammarAction();
+MatchNode * MatchGrammarAction( TeamNode * team1,  TeamNode * team2);
+TeamNode * TeamGrammarAction(TeamNameNode * name, FormationNumberType formation, PlayerNode * players);
+TeamNameNode * TeamNameGrammarAction(char * name);
+FormationNumberType FormationGrammarAction(char * formation);
+PlayerNode * PlayerGrammarAction(char * name,  PlayerNode * nextPlayer);
+PlayerNode * LastPlayerGrammarAction(char * name);
 
 #endif
