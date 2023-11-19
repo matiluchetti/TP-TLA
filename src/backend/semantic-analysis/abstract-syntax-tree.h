@@ -9,7 +9,7 @@
 typedef struct SportNode SportNode;
 typedef struct ProgramNode ProgramNode;
 typedef struct Expression Expression;
-typedef struct FormationNumberNode FormationNumberNode;
+
 typedef struct LineupNode LineupNode;
 typedef struct PlayerInfoNode PlayerInfoNode;
 typedef struct ProbabilityNode ProbabilityNode;
@@ -80,12 +80,6 @@ typedef enum {
 	BASQUET_3
 } SportType;
 
-typedef enum{
-	FORMATION_11,
-	FORMATION_8,
-	FORMATION_5,
-	FORMATION_3
-} FormationNumberType;
 
 struct ProgramNode{
 	struct SportNode * info;
@@ -121,7 +115,7 @@ struct TeamNameNode{
 };
 
 struct FormationNode{
-	FormationNumberType formation;
+	char * formation;
 };
 
 struct PlayerNode {
