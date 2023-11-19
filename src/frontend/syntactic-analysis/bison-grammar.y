@@ -14,10 +14,8 @@
 	Constant constant;
 	...
 	*/
-	FormationNumberType formationNumberType;
 	SportNode * sportNode;
 	ProgramNode * programNode;
-	FormationNumberNode * formationNumberNode;
 	LineupNode * lineupNode;
 	PlayerInfoNode * playerInfoNode;
 	ProbabilityNode * probabilityNode;
@@ -89,7 +87,7 @@
 %type <sportNode> expression
 %type <probabilityNode> oddsline
 %type <teamNameNode> nameline
-%type <formationNumberType> formationline
+%type <formationNode> formationline
 %type <playerNode> playerline
 
 

@@ -94,13 +94,11 @@ int Return0(){
 	return match;
 }
 
- TeamNode * TeamGrammarAction(TeamNameNode * name, FormationNumberType formation,  PlayerNode * players){
+ TeamNode * TeamGrammarAction(TeamNameNode * name,  FormationNode * formation,  PlayerNode * players){
 	 TeamNode * team = ( TeamNode *) calloc(1, sizeof( TeamNode));
 	team->teamName = name;
 	team->players = players;
-	FormationNode * formationNode =  ( FormationNode *) calloc(1, sizeof( FormationNode));
-	formationNode->formation = formation;
-	team->formation = formationNode;
+	team->formation = formation;
 	addTeam(name->teamName);
 	return team;
 }
@@ -111,36 +109,10 @@ int Return0(){
 	return teamName;
 }
 
-FormationNumberType  FormationGrammarAction(char * formation){
+FormationNode * FormationGrammarAction(char * formation){
 	FormationNode * formationNode = ( FormationNode *) calloc(1, sizeof( FormationNode));
-	int defenders, midfielders, forwards;
-	int a = sscanf(formation, "%d-%d-%d", &defenders, &midfielders, &forwards);
-	if ( a == 3 ){
-		if(defenders + midfielders + forwards == 10){
-			formationNode->formation = FORMATION_11;
-		}
-		else if(defenders + midfielders + forwards == 7){
-			formationNode->formation = FORMATION_8;
-		}
-		else if(defenders + midfielders + forwards == 4){
-			formationNode->formation = FORMATION_5;
-		}
-		else if(defenders + midfielders + forwards == 2){
-			formationNode->formation = FORMATION_3;
-		}
-	}
-	else if ( a == 2 ){
-		if (defenders + midfielders == 4) {
-			formationNode->formation = FORMATION_5;
-		}
-		else if (defenders + midfielders == 3){
-			formationNode->formation = FORMATION_3;
-		}
-	} 
-	else{
-		LogError("Error al parsear la formacion");
-	}
-	return formationNode->formation;
+	formationNode->formation = formation;
+	return formationNode;
 }
 
  PlayerNode * PlayerGrammarAction(char * name,  PlayerNode * nextPlayer){

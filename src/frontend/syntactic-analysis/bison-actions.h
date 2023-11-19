@@ -53,9 +53,9 @@ SportNode * SportGrammarAction(SportType sport,  ProbabilityNode * probabilities
 ProbabilityNode * OddsGrammarAction(char *odds);
 ProbabilityNode * NoOddsGrammarAction();
 MatchNode * MatchGrammarAction( TeamNode * team1,  TeamNode * team2);
-TeamNode * TeamGrammarAction(TeamNameNode * name, FormationNumberType formation, PlayerNode * players);
+TeamNode * TeamGrammarAction(TeamNameNode * name, FormationNode * formation, PlayerNode * players);
 TeamNameNode * TeamNameGrammarAction(char * name);
-FormationNumberType FormationGrammarAction(char * formation);
+FormationNode * FormationGrammarAction(char * formation);
 PlayerNode * PlayerGrammarAction(char * name,  PlayerNode * nextPlayer);
 PlayerNode * LastPlayerGrammarAction(char * name);
 
