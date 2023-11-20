@@ -34,7 +34,9 @@ token ColonPatternAction();
 token SemicolonPatternAction();
 token SubtractionOperatorPatternAction();
 token SportAction();
+token SportValueAction(const char * lexeme, const int length);
 token OddsAction();
+token OddsPrecentagesValueAction(const char * lexeme, const int length);
 token CommaPatternAction();
 token TeamAction();
 token TeamNameAction();
@@ -42,8 +44,9 @@ token PlayerListAction();
 token PlayerNameAction();
 token ArrayStartAction();
 token ArrayEndAction();
-token StringAction(const char * lexeme);
+token StringAction(const char * lexeme, int length);
 token FormationAction();
+token FormationNumberValueAction(const char * lexeme, const int length);
 
 // Patrón desconocido, permite abortar debido a un error de sintaxis.
 token UnknownPatternAction(const char * lexeme, const int length);

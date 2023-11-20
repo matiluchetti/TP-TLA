@@ -39,16 +39,16 @@ string          \"[A-Za-z0-9 ]+\"
 ","                                         { return CommaPatternAction(yytext); }
 
 "\"deporte\""                               { return SportAction(yytext); }
-"\"Hockey\""                                { return SPORTVALUE; }
-"\"Basquet 3\""                               { return SPORTVALUE; }
-"\"Basquet 5\""                               { return SPORTVALUE; }
-"\"Futbol 5\""                                { return SPORTVALUE; }
-"\"Futbol 8\""                                { return SPORTVALUE; }
-"\"Futbol 11\""                                { return SPORTVALUE; }
+"\"Hockey\""                                { return SportValueAction(yytext, yyleng); }
+"\"Basquet 3\""                             { return SportValueAction(yytext, yyleng); }
+"\"Basquet 5\""                             { return SportValueAction(yytext, yyleng); }
+"\"Futbol 5\""                              { return SportValueAction(yytext, yyleng); }
+"\"Futbol 8\""                              { return SportValueAction(yytext, yyleng); }
+"\"Futbol 11\""                             { return SportValueAction(yytext, yyleng); }
 
 "\"probabilidades\""                        { return OddsAction(); }
-\"[0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"        { return ODDSPERCENTAGES;}
-\"[1-5]-[1-5](-[1-5])?\"                    { return FORMATIONNUMBER;}
+\"[0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"        { return OddsPercentagesValueAction(yytext, yyleng);}
+\"[1-5]-[1-5](-[1-5])?\"                    { return FormationNumberValueAction(yytext,yyleng);}
 
 
 "\"equipos\""                               { return TeamAction();}
@@ -57,7 +57,7 @@ string          \"[A-Za-z0-9 ]+\"
 "\"jugador\""                               { return PlayerNameAction();}
 "\"formacion\""                             { return FormationAction();}
 
-{string}                                    { return StringAction(yytext);}
+{string}                                    { return StringAction(yytext, yyleng);}
 
 {digit}+									{ return IntegerPatternAction(yytext, yyleng); }
 

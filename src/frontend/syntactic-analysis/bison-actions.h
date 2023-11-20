@@ -49,7 +49,7 @@
 
 ProgramNode * ProgramGrammarAction(SportNode * sport);
 int Return0();
-SportNode * SportGrammarAction(SportType sport,  ProbabilityNode * probabilities,  MatchNode *match);
+SportNode * SportGrammarAction(char * sport,  ProbabilityNode * probabilities,  MatchNode *match);
 ProbabilityNode * OddsGrammarAction(char *odds);
 ProbabilityNode * NoOddsGrammarAction();
 MatchNode * MatchGrammarAction( TeamNode * team1,  TeamNode * team2);

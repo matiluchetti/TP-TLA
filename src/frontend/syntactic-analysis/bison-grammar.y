@@ -57,7 +57,8 @@
 %token <token> LCURLY
 %token <token> RCURLY
 %token <token> SPORT
-%token <token> SPORTVALUE
+
+
 %token <token> COLON
 %token <token> SEMICOLON
 %token <token> FUTBOL11
@@ -82,6 +83,7 @@
 %token <integer> INTEGER
 %token <string> FORMATIONNUMBER
 %token <string> ODDSPERCENTAGES
+%token <string> SPORTVALUE
 
 // Tipos de dato para los no-terminales generados desde Bison.
 %type <programNode> program

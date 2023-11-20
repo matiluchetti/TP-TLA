@@ -96,10 +96,41 @@ token SportAction() {
 	return SPORT;
 }
 
+
+token SportValueAction(const char * sport, const int length) {
+	LogDebug("[Flex] Sport value is: %s", sport);;
+	char * result= calloc(length+1, sizeof(char));
+	strncpy(result, sport, length);
+	result[length] = '\0';
+
+	yylval.string = result;
+	return SPORTVALUE;
+}
+
 token OddsAction(){
 	LogDebug("[Flex] OddsAction: '-'.");
 	yylval.token = ODDS;
-	return ODDS;
+	return ODDS; 
+}
+
+token OddsPercentagesValueAction(const char * odds, int length){
+	LogDebug("[Flex] Odds value is: %s", odds);
+	char * result= calloc(length+1, sizeof(char));
+	strncpy(result, odds, length);
+	result[length] = '\0';
+
+	yylval.string = result;
+	return ODDSPERCENTAGES;
+}
+
+token FormationNumberValueAction(const char * formation, int length){
+	LogDebug("[Flex] Formation value is: %s", formation);
+	char * result= calloc(length+1, sizeof(char));
+	strncpy(result, formation, length);
+	result[length] = '\0';
+
+	yylval.string = result;
+	return FORMATIONNUMBER;
 }
 
 
@@ -145,7 +176,12 @@ token FormationAction(){
 	return FORMATION;
 }
 
-token StringAction(const char * match){
-	yylval.string = (char*) match;
+token StringAction(const char * string, int length){
+LogDebug("[Flex] String value is: %s", string);
+	char * result= calloc(length+1, sizeof(char));
+	strncpy(result, string, length);
+	result[length] = '\0';
+
+	yylval.string = result;
 	return STRING;
 }

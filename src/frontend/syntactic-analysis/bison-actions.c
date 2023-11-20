@@ -65,9 +65,10 @@ int Return0(){
 	return 0;
 }
 
- SportNode * SportGrammarAction(SportType selected_sport,  ProbabilityNode * probabilities,  MatchNode *match){
+ SportNode * SportGrammarAction(char * selected_sport,  ProbabilityNode * probabilities,  MatchNode *match){
 	SportNode * sport = ( SportNode *) calloc(1, sizeof( SportNode));
-	sport->sport = selected_sport;
+	printf(selected_sport);
+	sport->sport = FUTBOL_11;
 	sport->probabilities = probabilities;
 	sport->match = match;
 	return sport;
@@ -75,10 +76,13 @@ int Return0(){
 
  ProbabilityNode * OddsGrammarAction(char * odds){
 	ProbabilityNode * probabilities = ( ProbabilityNode *) calloc(1, sizeof( ProbabilityNode));
+	LogInfo("Odds grammar action");
 	probabilities->type = PROBABILITY;
+	LogInfo("odds: %s", odds);
 	if(sscanf(odds, "%2d-%2d-%2d", &probabilities->t1_odds, &probabilities->tie_odds, &probabilities->t2_odds) != 3){
 		LogError("Error al parsear las probabilidades");
 	}
+	LogInfo("%2d-%2d-%2d", probabilities->t1_odds, probabilities->tie_odds, probabilities->t2_odds);
 	return probabilities;
 }
 
