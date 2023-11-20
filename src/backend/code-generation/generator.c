@@ -13,9 +13,9 @@ static FILE * pythonFile;
 int Generator(ProgramNode * initial) {
 	//pythonFile = fopen("./output/imageGenerator.py", "w");
 
-	// if(!validator(initial)){
-    //     return -1;
-    // }
+	if(!validator(initial)){
+        return -1;
+    }
 
     // fprintf(pythonFile, "from PIL import Image, ImageFont, ImageDraw\n");
 	// char * team1Name = getTeamName(initial,0);
@@ -83,9 +83,11 @@ int validator(ProgramNode * initial){
 	if( players1 != players2 && players2 == -1){
 		state.succeed = false;
 		state.result = 3;
+		LogError("Linea 86");
 		return 0;
 	}
-    
+    if(sportType == HOCKEY)
+	 LogInfo("es hockey");
 // la cantidad de jugadores por equipo debe se acorde a su deporte
 	if(sportType == BASQUET_3 && players1 != 3 
 		|| ((sportType == BASQUET_5 || sportType == FUTBOL_5) && players1 != 5)
@@ -93,31 +95,31 @@ int validator(ProgramNode * initial){
 		){
 			state.succeed = false;
 			state.result = 3;
+			LogError("Error en tipo de deporte");
 			return 0;
 		}
    
    // la cantidad de jugadores en la formacion debe ser acorde
 
    char * buff;
+   
    for (int i = 0; i < teamsAmm; i++){
         int aux = 0, num;
         if(i==0){
-		 buff = initial->info->match->team1->formation->formation;
+			buff = initial->info->match->team1->formation->formation;
 		}
 		else{
 			buff = initial->info->match->team2->formation->formation;
 		}
-        char string[12];
-        strcpy(string,  buff);
-
-        char * token = strtok(string, "-");
-        
-        while (token != NULL) {
-            num  = atoi(token);
-            aux += num;
-            token = strtok(NULL, "-");
-        }
-        // en futbol y hockey no cuento al arquero, en basquet si
+		int defenders = 0, mid = 0, attackers = 0;
+		if (strlen(buff) == 5){
+			sscanf(buff, "\"%2d-%2d\"", &defenders, &mid);
+		}
+		else{
+			sscanf(buff, "\"%2d-%2d-%2d\"", &defenders, &mid, &attackers);
+		}
+		aux = defenders + mid + attackers;
+		LogInfo("Players are %d, aux is %d",players1,aux);
         if( players1 != (aux + 1) && (players1 != aux && sportType != BASQUET_3 && sportType != BASQUET_5)){
             state.succeed = false;
             state.result = 3;
@@ -133,6 +135,7 @@ int validator(ProgramNode * initial){
 		if(odds1 < 0 || odds2 < 0 || oddsT < 0 || odds1 + odds2 + oddsT != 100){
 			state.succeed = false;
 			state.result = 3;
+					LogError("Linea 139");
 			return  0;
 		}
 	}

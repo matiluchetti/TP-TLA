@@ -67,8 +67,25 @@ int Return0(){
 
  SportNode * SportGrammarAction(char * selected_sport,  ProbabilityNode * probabilities,  MatchNode *match){
 	SportNode * sport = ( SportNode *) calloc(1, sizeof( SportNode));
-	printf(selected_sport);
-	sport->sport = FUTBOL_11;
+	
+	if (strcmp(selected_sport, "\"Hockey\"") == 0) {
+        sport->sport = HOCKEY;
+    } else if (strcmp(selected_sport, "\"Basquet 3\"") == 0) {
+        sport->sport = BASQUET_3;
+    } else if (strcmp(selected_sport, "\"Basquet 5\"") == 0) {
+        sport->sport = BASQUET_5;
+    } else if (strcmp(selected_sport, "\"Futbol 5\"") == 0) {
+        sport->sport = FUTBOL_5;
+    } else if (strcmp(selected_sport, "\"Futbol 8\"") == 0) {
+        sport->sport = FUTBOL_8;
+    } else if (strcmp(selected_sport, "\"Futbol 11\"") == 0) {
+        sport->sport = FUTBOL_11;
+    } else {
+        // Si el string no coincide con ninguna opción esperada, registrar un error y retornar NULL
+        LogError("Tipo de deporte no reconocido");
+        free(sport);  
+        return NULL;
+    }
 	sport->probabilities = probabilities;
 	sport->match = match;
 	return sport;
@@ -79,10 +96,10 @@ int Return0(){
 	LogInfo("Odds grammar action");
 	probabilities->type = PROBABILITY;
 	LogInfo("odds: %s", odds);
-	if(sscanf(odds, "%2d-%2d-%2d", &probabilities->t1_odds, &probabilities->tie_odds, &probabilities->t2_odds) != 3){
+	if(sscanf(odds, "\"%2d-%2d-%2d\"", &probabilities->t1_odds, &probabilities->tie_odds, &probabilities->t2_odds) != 3){
 		LogError("Error al parsear las probabilidades");
 	}
-	LogInfo("%2d-%2d-%2d", probabilities->t1_odds, probabilities->tie_odds, probabilities->t2_odds);
+	LogInfo("\"%2d-%2d-%2d\"", probabilities->t1_odds, probabilities->tie_odds, probabilities->t2_odds);
 	return probabilities;
 }
 
@@ -122,7 +139,7 @@ int Return0(){
 FormationNode * FormationGrammarAction(char * formation){
 	FormationNode * formationNode = ( FormationNode *) calloc(1, sizeof( FormationNode));
 	formationNode->formation = formation;
-			LogDebug("hasta aca formation");
+			LogDebug(formation);
 	return formationNode;
 }
 
@@ -135,9 +152,7 @@ PlayerNode * PlayerGrammarAction(char * name,  PlayerNode * nextPlayer){
 	PlayerNode * playerM = ( PlayerNode *) calloc(1, sizeof( PlayerNode));
 	playerM->playerName = name;
 	playerM->nextPlayer = nextPlayer;
-	LogDebug("Llamo a addPlayer...");
 	addPlayer(name);	
-	LogDebug("Todo bien en addPlayer");
 	return playerM;
 }
 

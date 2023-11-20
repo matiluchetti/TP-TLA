@@ -45,9 +45,8 @@ const int main(const int argumentCount, const char ** arguments) {
 						result = -1;
 						break;
 					default:
-					LogInfo("tira error %d",a);
+					LogInfo("Error con codigo %d",a);
 				}
-
 				
 			}
 			else {
