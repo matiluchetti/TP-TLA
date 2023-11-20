@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "../semantic-analysis/abstract-syntax-tree.h"
+
 // Descriptor del archivo de entrada que utiliza Bison.
 extern FILE * yyin;
 
@@ -11,7 +12,7 @@ extern FILE * yyout;
 
 // La cantidad de caracteres en el lexema "yytext". Se debe leer en las
 // acciones de Flex, no en Bison.
-extern int yyleng;
+extern unsigned long yyleng;
 
 // Variable global que contiene el número de la línea analizada.
 extern int yylineno;
@@ -30,8 +31,8 @@ extern int yyparse(void);
 
 // Emular tipo "boolean".
 typedef enum {
-	
-	false = 0 ,
+
+	false = 0,
 	true = 1
 } boolean;
 
@@ -39,7 +40,7 @@ typedef enum {
 typedef int token;
 
 // Estado global de toda la aplicación.
-typedef struct CompilerState{
+typedef struct {
 
 	// Indica si la compilación tuvo problemas hasta el momento.
 	boolean succeed;
@@ -48,7 +49,7 @@ typedef struct CompilerState{
 	int result;
 
 	// El nodo raíz del AST (se usará cuando se implemente el backend).
-	struct ProgramNode * program;
+	ProgramNode * program;
 
 	// Agregar lo que sea necesario para el compilador.
 	// Agregar una pila para manipular scopes.
@@ -58,6 +59,6 @@ typedef struct CompilerState{
 } CompilerState;
 
 // El estado se define e inicializa en el archivo "main.c".
-extern  CompilerState state;
+extern CompilerState state;
 
 #endif
