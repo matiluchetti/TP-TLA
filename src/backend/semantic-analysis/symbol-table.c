@@ -17,8 +17,12 @@ void symbolTableInit(){
         exit(EXIT_FAILURE);
     }
 
-    symbolTable->teams = CList_init(sizeof(teams_t));
-    symbolTable->size = 0;
+    symbolTable->team1 = initTableList();
+    symbolTable->team2 = initTableList();
+    symbolTable->size = 1;
+
+    printf("Initial count for team1: %d", countList(symbolTable->team1));
+    printf("Initial count for team2: %d", countList(symbolTable->team2));
 
 }
 
@@ -27,23 +31,24 @@ symbol_t * getSymbolTable(){
 }
 
 void addPlayer(char * playerName){
-    player_t player;
-    strcpy(player.name, playerName);
-    teams_t * team = (teams_t *)CList_At_(symbolTable->teams, symbolTable->size - 1);
-    if(team->players == NULL || team->players->count == 0){
-        team->players = CList_init(sizeof(player_t));
-    }
-    symbolTable->teams->add(team->players, &player);
-}
-
-void addTeam(char * teamName){
-    if(symbolTable->size <= 2){
-        teams_t team;
-        strcpy(team.name, teamName);
-        symbolTable->teams->add(symbolTable->teams, &team);
-        symbolTable->size++;
+    if(symbolTable->size == 1){
+        
+        printf("Previous count: %d",countList(symbolTable->team1));
+        listInsert(symbolTable->team1, playerName);
+        printf("Actual count: %d",countList(symbolTable->team1));
     }
     else{
+        printf("Previous count: %d",countList(symbolTable->team2));
+        listInsert(symbolTable->team2, playerName);
+        printf("Actual count: %d",countList(symbolTable->team2));
+    }
+}
+
+void addTeam(){
+    if(symbolTable->size == 1){
+        symbolTable->size++;
+    }
+    else if(symbolTable->size !=2){
         printf("Can't add any more teams\n");
     }
 }
@@ -54,20 +59,8 @@ void symbolTableFree(){
         printf("Symbol table already freed\n");
         return;
     }
-    if (symbolTable->teams != NULL && symbolTable->size > 0) {
-        teams_t *firstTeam = (teams_t *)CList_At_(symbolTable->teams, 0);
-        if (firstTeam != NULL && firstTeam->players != NULL) {
-            firstTeam->players->free(firstTeam->players);
-        }
-    }
-
-    if (symbolTable->teams != NULL && symbolTable->size > 1) {
-        teams_t *secondTeam = (teams_t *)CList_At_(symbolTable->teams, 1);
-        if (secondTeam != NULL && secondTeam->players != NULL) {
-            secondTeam->players->free(secondTeam->players);
-        }
-    }
-    symbolTable->teams->free(symbolTable->teams);
+    freeTableList(symbolTable->team1);
+    freeTableList(symbolTable->team2);
     free(symbolTable);
     symbolTable = NULL;
 }

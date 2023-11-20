@@ -4,7 +4,7 @@
 #include "../../backend/support/shared.h"
 #include "../../backend/semantic-analysis/abstract-syntax-tree.h"
 #include "../../backend/semantic-analysis/symbol-table.h"
-#include "../../backend/support/clist.h"
+#include "../../backend/support/table-list.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -56,6 +56,7 @@ MatchNode * MatchGrammarAction( TeamNode * team1,  TeamNode * team2);
 TeamNode * TeamGrammarAction(TeamNameNode * name, FormationNode * formation, PlayerNode * players);
 TeamNameNode * TeamNameGrammarAction(char * name);
 FormationNode * FormationGrammarAction(char * formation);
+PlayerNode * PlayerListGrammarAction(PlayerNode * firstPlayer);
 PlayerNode * PlayerGrammarAction(char * name,  PlayerNode * nextPlayer);
 PlayerNode * LastPlayerGrammarAction(char * name);
 

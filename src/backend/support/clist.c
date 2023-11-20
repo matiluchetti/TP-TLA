@@ -1,10 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <assert.h>
+#include <stdint.h>
 #include "clist.h"
-
-
-
-
-// got everything from https://github.com/AlexanderAgd/CLIST/blob/master/clist.c
-
 
 typedef struct
 {

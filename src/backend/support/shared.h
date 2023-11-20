@@ -3,7 +3,6 @@
 
 #include <stdio.h>
 #include "../semantic-analysis/abstract-syntax-tree.h"
-
 // Descriptor del archivo de entrada que utiliza Bison.
 extern FILE * yyin;
 
@@ -31,8 +30,8 @@ extern int yyparse(void);
 
 // Emular tipo "boolean".
 typedef enum {
-
-	false = 0,
+	
+	false = 0 ,
 	true = 1
 } boolean;
 
@@ -40,7 +39,7 @@ typedef enum {
 typedef int token;
 
 // Estado global de toda la aplicación.
-typedef struct {
+typedef struct CompilerState{
 
 	// Indica si la compilación tuvo problemas hasta el momento.
 	boolean succeed;
@@ -49,7 +48,7 @@ typedef struct {
 	int result;
 
 	// El nodo raíz del AST (se usará cuando se implemente el backend).
-	ProgramNode * program;
+	struct ProgramNode * program;
 
 	// Agregar lo que sea necesario para el compilador.
 	// Agregar una pila para manipular scopes.
@@ -59,6 +58,6 @@ typedef struct {
 } CompilerState;
 
 // El estado se define e inicializa en el archivo "main.c".
-extern CompilerState state;
+extern  CompilerState state;
 
 #endif

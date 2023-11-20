@@ -34,6 +34,7 @@
 	int formationline;
 	int nameline;
 	int playerline;
+	int player;
 
 	int fivesportvalue;
 	int eightsportvalue;
@@ -89,6 +90,7 @@
 %type <teamNameNode> nameline
 %type <formationNode> formationline
 %type <playerNode> playerline
+%type <playerNode> player
 
 
 %type <matchNode> teamsline
@@ -115,13 +117,16 @@ oddsline: ODDS COLON ODDSPERCENTAGES COMMA						{ $$ = OddsGrammarAction($3);}
 teamsline: TEAMS COLON ARRAY_START team COMMA team ARRAY_END	{ $$ = MatchGrammarAction($4,$6);}
 	;
 
-team: LCURLY nameline COMMA formationline COMMA playerline RCURLY	{ $$ = TeamGrammarAction($2, $4,$6);}
+team: LCURLY nameline COMMA formationline COMMA player RCURLY	{ $$ = TeamGrammarAction($2, $4,$6);}
 	;
 
 nameline: TEAM_NAME COLON STRING									{ $$ = TeamNameGrammarAction($3);}
 	;
 
 formationline: FORMATION COLON FORMATIONNUMBER						{ $$ = FormationGrammarAction($3);}
+	;
+
+player: PLAYER_LIST COLON ARRAY_START playerline ARRAY_END			{$$ = PlayerListGrammarAction($4);}
 	;
 
 playerline: LCURLY PLAYER_NAME COLON STRING RCURLY COMMA playerline		{ $$ = PlayerGrammarAction($4,$7);}

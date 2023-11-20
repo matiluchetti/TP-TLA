@@ -1,16 +1,18 @@
+#include "backend/support/shared.h"
 #include "backend/code-generation/generator.h"
 #include "backend/support/logger.h"
-#include "backend/support/shared.h"
 #include "frontend/syntactic-analysis/bison-parser.h"
 #include <stdio.h>
 #include "backend/semantic-analysis/symbol-table.h"
-
+#include "backend/support/table-list.h"
 // Estado de la aplicación.
-CompilerState state;
+CompilerState state = {false, 0, NULL};
+
 
 // Punto de entrada principal del compilador.
 const int main(const int argumentCount, const char ** arguments) {
 	// Inicializar estado de la aplicación.
+
 	state.program = NULL;
 	state.result = 0;
 	state.succeed = false;
@@ -32,7 +34,9 @@ const int main(const int argumentCount, const char ** arguments) {
 			// inicial de la gramática satisfactoriamente.
 			if (state.succeed) {
 				LogInfo("La compilacion fue exitosa.");
-				switch(Generator(state.program)){
+				int a = Generator(state.program);
+
+				switch(a){
 					case 0:
 						LogInfo("Generacion exitosa");
 						break;
@@ -40,7 +44,10 @@ const int main(const int argumentCount, const char ** arguments) {
 						LogError("Error en tiempo de generacion de codigo");
 						result = -1;
 						break;
+					default:
+					LogInfo("tira error %d",a);
 				}
+
 				
 			}
 			else {
