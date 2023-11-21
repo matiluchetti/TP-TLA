@@ -12,10 +12,10 @@
 
 int Generator(ProgramNode * initial);
 int validator(ProgramNode * initial);
-char * getPlayersArray(int team_idx);
+char ** getPlayersArray(int team_idx);
 char * getMatchProbabilities(ProgramNode * initial);
 char * getTeamName(ProgramNode* initial, int team_idx);
 char * getFormation(ProgramNode* initial, int team_idx);
-
+char * getSport(ProgramNode * initial);
 
 #endif
