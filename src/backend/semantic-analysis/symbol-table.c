@@ -21,9 +21,6 @@ void symbolTableInit(){
     symbolTable->team2 = initTableList();
     symbolTable->size = 1;
 
-    printf("Initial count for team1: %d", countList(symbolTable->team1));
-    printf("Initial count for team2: %d", countList(symbolTable->team2));
-
 }
 
 symbol_t * getSymbolTable(){
@@ -32,15 +29,10 @@ symbol_t * getSymbolTable(){
 
 void addPlayer(char * playerName){
     if(symbolTable->size == 1){
-        
-        printf("Previous count: %d",countList(symbolTable->team1));
         listInsert(symbolTable->team1, playerName);
-        printf("Actual count: %d",countList(symbolTable->team1));
     }
     else{
-        printf("Previous count: %d",countList(symbolTable->team2));
         listInsert(symbolTable->team2, playerName);
-        printf("Actual count: %d",countList(symbolTable->team2));
     }
 }
 

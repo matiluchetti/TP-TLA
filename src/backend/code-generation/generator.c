@@ -36,7 +36,6 @@ int Generator(ProgramNode * initial) {
 	char * sport = getSport(initial);
 	char * formation1 = getFormation(initial,0);
 	noQuotes(formation1);
-	LogInfo(formation1);
 	char * formation2 = getFormation(initial,1);
 	noQuotes(formation2);
 	char ** players1 = getPlayersArray(0);
@@ -134,7 +133,7 @@ int Generator(ProgramNode * initial) {
 	mid = 0;
 	attackers = 0;
 	aux = 0;
-	LogInfo(formation1);
+
 	if (strlen(formation1) == 3){
 		sscanf(formation1, "%2d-%2d", &defenders, &mid);
 	}
@@ -174,7 +173,6 @@ int Generator(ProgramNode * initial) {
 	defenders = 0;
 	mid = 0;
 	attackers = 0;
-	LogInfo(formation2);
 	if (strlen(formation2) == 3){
 		sscanf(formation2, "%2d-%2d", &defenders, &mid);
 	}
@@ -191,9 +189,7 @@ int Generator(ProgramNode * initial) {
 	if(attackers != 0){
 		fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
 		for(int j=0; j < attackers; j++){
-			LogInfo("trying to add player %d",aux);
    			fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">%s</div>\n",players2[aux--]);
-						LogInfo("Jugador %d agregado del",aux-1);
 		}
 		fprintf(htmlFile, "\t\t\t</div>\n");
 	}
@@ -201,14 +197,12 @@ int Generator(ProgramNode * initial) {
 	fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
 	for(int j=0; j < mid; j++){
    			fprintf(htmlFile, "\t\t\t\t<div class=\"player team2\">%s</div>\n",players2[aux--]);
-					LogInfo("Jugador %d agregado",aux-1);
 	}
 	fprintf(htmlFile, "\t\t\t</div>\n");
 
 	fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
 	for(int j=0; j < defenders; j++){
    			fprintf(htmlFile, "\t\t\t\t<div class=\"player team2\">%s</div>\n",players2[aux--]);
-		LogInfo("Jugador %d agregado",aux-1);
 	}
 	fprintf(htmlFile, "\t\t\t\t</div>\n");
 
@@ -218,25 +212,6 @@ int Generator(ProgramNode * initial) {
 		fprintf(htmlFile, "\t\t\t</div>\n");
 	}
 	
-
-    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 1</div>\n");
-    // fprintf(htmlFile, "\t\t\t</div>\n");
-    // fprintf(htmlFile, "\n");
-    // fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
-    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 2</div>\n");
-    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 3</div>\n");
-    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 4</div>\n");
-    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 5</div>\n");
-    // fprintf(htmlFile, "\t\t\t</div>\n");
-    // fprintf(htmlFile, "\n");
-    // fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
-    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 6</div>\n");
-    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 7</div>\n");
-    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 8</div>\n");
-    // fprintf(htmlFile, "\t\t\t</div>\n");
-    // fprintf(htmlFile, "\n");
-    // fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
-    // fprintf(htmlFile, "\t\t\t\t<div class=\"team-divider\"></div>\n");
 	fprintf(htmlFile, "\t\t\t</div>\n");
     fprintf(htmlFile, "\t\t<div class=\"info-container\">\n");
     fprintf(htmlFile, "\t\t\t<h2>Información del Partido</h2>\n");
@@ -283,11 +258,9 @@ int validator(ProgramNode * initial){
 	if( players1 != players2 && players2 == -1){
 		state.succeed = false;
 		state.result = 3;
-		LogError("Linea 86");
 		return 0;
 	}
     if(sportType == HOCKEY)
-	 LogInfo("es hockey");
 // la cantidad de jugadores por equipo debe se acorde a su deporte
 	if(sportType == BASQUET_3 && players1 != 3 
 		|| ((sportType == BASQUET_5 || sportType == FUTBOL_5) && players1 != 5)
@@ -319,7 +292,6 @@ int validator(ProgramNode * initial){
 			sscanf(buff, "\"%2d-%2d-%2d\"", &defenders, &mid, &attackers);
 		}
 		aux = defenders + mid + attackers;
-		LogInfo("Players are %d, aux is %d",players1,aux);
         if( players1 != (aux + 1) && (players1 != aux && sportType != BASQUET_3 && sportType != BASQUET_5)){
             state.succeed = false;
             state.result = 3;
@@ -361,7 +333,6 @@ char ** getPlayersArray(int team_idx) {
 		noQuotes(name);
 		strcpy(resultBuffer[i],name);
 		noQuotes(resultBuffer);
-		printf(resultBuffer[i]);
     }
 	
 
@@ -374,7 +345,6 @@ char * getMatchProbabilities(ProgramNode * initial){
 		return strdup("");
 	}
 	char* resultBuffer = calloc(1, BUFFER_LENGTH * sizeof(char));
-	LogInfo("Odds are %d, %d,%d",probability->t1_odds,probability->tie_odds,probability->t2_odds);
 	sprintf(resultBuffer, "Equipo 1 deberia pagar: \"%.2f\", Empate deberia pagar: %.2f\",  Equipo 2 deberia pagar: \"%.2f\"", 100.0/probability->t1_odds, 100.0/probability->tie_odds, 100.0/probability->t2_odds);
 	return resultBuffer;
 }
