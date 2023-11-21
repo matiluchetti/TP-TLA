@@ -24,10 +24,8 @@ int Generator(ProgramNode * initial) {
 
 
 	static FILE * htmlFile;
-	static FILE * cssFile;
 
 	htmlFile = fopen("./out/match.html", "w");
-	cssFile = fopen("./out/match.css", "w");
 
 	if(!validator(initial)){
         return -1;
@@ -36,7 +34,6 @@ int Generator(ProgramNode * initial) {
 	char * team1Name = getTeamName(initial,0);
 	char * team2Name = getTeamName(initial,1);
 	char * sport = getSport(initial);
-	char * odds = getMatchProbabilities(initial);
 	char * formation1 = getFormation(initial,0);
 	noQuotes(formation1);
 	LogInfo(formation1);
@@ -44,23 +41,99 @@ int Generator(ProgramNode * initial) {
 	noQuotes(formation2);
 	char ** players1 = getPlayersArray(0);
 	char ** players2 = getPlayersArray(1);
-	fprintf(htmlFile, "<head>\n"
-						"\t <link rel=\"stylesheet\" href=\"https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css\">\n"
-                        "\t <link rel=\"stylesheet\" href=\"match.css\">\n"
-						"</head>\n");
-	fprintf(htmlFile,	"<body>\n"
-						"\t<header>\n"
-						"\t\tPartido de %s\n"
-						"equipo 1: %s VS equipo 2: %s\n"
-						"\t\tLas probabilidades son: %s\n"
-						"\t</header>\n ", sport,team1Name, team2Name, odds);
-	free(team1Name);
-	free(team2Name);
-	fprintf(htmlFile, "\t<main>\n");
-	fprintf(htmlFile, "\t\t<div class=\"pitch\">\n");
-	fprintf(htmlFile, "\t\t\t<h4>%s %s</h4>\n", formation1, formation2);
-	fprintf(htmlFile, "\t\t\t<div class=\"container\">\n");
+
+	
+
 	int defenders = 0, mid = 0, attackers = 0, aux=0;;
+
+
+	fprintf(htmlFile, "<!DOCTYPE html>\n");
+    fprintf(htmlFile, "<html lang=\"en\">\n");
+    fprintf(htmlFile, "<head>\n");
+    fprintf(htmlFile, "\t<meta charset=\"UTF-8\">\n");
+    fprintf(htmlFile, "\t<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n");
+    fprintf(htmlFile, "\t<style>\n");
+    fprintf(htmlFile, "\t\tbody {\n");
+	if(initial->info->sport != BASQUET_3 && initial->info->sport != BASQUET_5){
+    	fprintf(htmlFile, "\t\t\tbackground-color: #4CAF50;\n");
+	}else{
+		fprintf(htmlFile, "\t\t\tbackground-color: #FFD700;\n");
+	}
+    fprintf(htmlFile, "\t\t\tdisplay: flex;\n");
+    fprintf(htmlFile, "\t\t\tflex-direction: column;\n");
+    fprintf(htmlFile, "\t\t\talign-items: center;\n");
+    fprintf(htmlFile, "\t\t\theight: 100vh;\n");
+    fprintf(htmlFile, "\t\t\tmargin: 0;\n");
+    fprintf(htmlFile, "\t\t}\n");
+    fprintf(htmlFile, "\n");
+    fprintf(htmlFile, "\t\t.field-container {\n");
+    fprintf(htmlFile, "\t\t\tdisplay: flex;\n");
+    fprintf(htmlFile, "\t\t\tflex-direction: column;\n");
+    fprintf(htmlFile, "\t\t\talign-items: center;\n");
+    fprintf(htmlFile, "\t\t\tmargin-bottom: 20px;\n");
+    fprintf(htmlFile, "\t\t}\n");
+    fprintf(htmlFile, "\n");
+    fprintf(htmlFile, "\t\t.field {\n");
+    fprintf(htmlFile, "\t\t\tdisplay: flex;\n");
+    fprintf(htmlFile, "\t\t\tflex-direction: row;\n");
+    fprintf(htmlFile, "\t\t\tposition: relative;\n");
+    fprintf(htmlFile, "\t\t\twidth: 600px;\n");
+    fprintf(htmlFile, "\t\t\theight: 300px;\n");
+	if(initial->info->sport != BASQUET_3 && initial->info->sport != BASQUET_5){
+    	fprintf(htmlFile, "\t\t\tbackground-color: #2ECC71;\n");
+	}else{
+		fprintf(htmlFile, "\t\t\tbackground-color: #FFA500;\n");
+	}
+    fprintf(htmlFile, "\t\t\tborder-radius: 10px;\n");
+    fprintf(htmlFile, "\t\t\toverflow: hidden; \n");
+    fprintf(htmlFile, "\t\t}\n");
+    fprintf(htmlFile, "\n");
+    fprintf(htmlFile, "\t\t.column {\n");
+    fprintf(htmlFile, "\t\t\tdisplay: flex;\n");
+    fprintf(htmlFile, "\t\t\tflex-direction: column;\n");
+    fprintf(htmlFile, "\t\t\talign-items: center;\n");
+    fprintf(htmlFile, "\t\t\tjustify-content: center;\n");
+    fprintf(htmlFile, "\t\t\tflex: 1;\n");
+    fprintf(htmlFile, "\t\t}\n");
+    fprintf(htmlFile, "\n");
+    fprintf(htmlFile, "\t\t.player {\n");
+    fprintf(htmlFile, "\t\t\twidth: 40px;\n");
+    fprintf(htmlFile, "\t\t\theight: 40px;\n");
+    fprintf(htmlFile, "\t\t\tbackground-color: #3498DB;\n");
+    fprintf(htmlFile, "\t\t\tcolor: #FFFFFF;\n");
+    fprintf(htmlFile, "\t\t\tborder-radius: 50%%;\n");
+    fprintf(htmlFile, "\t\t\tmargin-bottom: 10px;\n");
+    fprintf(htmlFile, "\t\t\tdisplay: flex;\n");
+    fprintf(htmlFile, "\t\t\tjustify-content: center;\n");
+    fprintf(htmlFile, "\t\t\talign-items: center;\n");
+    fprintf(htmlFile, "\t\t\tfont-size: 12px;\n");
+    fprintf(htmlFile, "\t\t}\n");
+    fprintf(htmlFile, "\n");
+    fprintf(htmlFile, "\t\t.team-divider {\n");
+    fprintf(htmlFile, "\t\t\tposition: absolute;\n");
+    fprintf(htmlFile, "\t\t\twidth: 2px;\n");
+    fprintf(htmlFile, "\t\t\theight: 100%%;\n");
+    fprintf(htmlFile, "\t\t\tbackground-color: #FFFFFF;\n");
+    fprintf(htmlFile, "\t\t\tleft: 50%%;\n");
+    fprintf(htmlFile, "\t\t\ttransform: translateX(-50%%);\n");
+    fprintf(htmlFile, "\t\t}\n");
+    fprintf(htmlFile, "\n");
+    fprintf(htmlFile, "\t\t.info-container {\n");
+    fprintf(htmlFile, "\t\t\ttext-align: center;\n");
+    fprintf(htmlFile, "\t\t\tcolor: #FFFFFF;\n");
+    fprintf(htmlFile, "\t\t}\n");
+    fprintf(htmlFile, "\t</style>\n");
+    fprintf(htmlFile, "\t<title>Match</title>\n");
+    fprintf(htmlFile, "</head>\n");
+    fprintf(htmlFile, "<body>\n");
+    fprintf(htmlFile, "\t<div class=\"field-container\">\n");
+    fprintf(htmlFile, "\t\t<div class=\"field\">\n");
+
+
+	defenders = 0;
+	mid = 0;
+	attackers = 0;
+	aux = 0;
 	LogInfo(formation1);
 	if (strlen(formation1) == 3){
 		sscanf(formation1, "%2d-%2d", &defenders, &mid);
@@ -70,37 +143,33 @@ int Generator(ProgramNode * initial) {
 	}
 
 	if(initial->info->sport != BASQUET_5 && initial->info->sport != BASQUET_3){
-		fprintf(htmlFile, "\t\t\t\t<div class=\"row\">\n");
-		fprintf(htmlFile, "\t\t\t\t\t<div class=\"pos\">%s</div>\n", players1[aux++]);
-		fprintf(htmlFile, "\t\t\t\t</div>\n");
+    	fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
+		fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">%s</div>\n",players1[aux++]);
+		fprintf(htmlFile, "\t\t\t</div>\n");
 	}
 
 
-	fprintf(htmlFile, "\t\t\t\t<div class=\"row\">\n");
+	fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
 	for(int j=0; j < defenders; j++){
-		fprintf(htmlFile, "\t\t\t\t\t<div class=\"pos\">%s</div>\n", players1[aux++]);
-		LogInfo("Jugador %d agregado",aux-1);
+		fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">%s</div>\n",players1[aux++]);
 	}
-	fprintf(htmlFile, "\t\t\t\t</div>\n");
-	fprintf(htmlFile, "\t\t\t\t<div class=\"row\">\n");
+	fprintf(htmlFile, "\t\t\t</div>\n");
+	fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
 	for(int j=0; j < mid; j++){
-		fprintf(htmlFile, "\t\t\t\t\t<div class=\"pos\">%s</div>\n", players1[aux++]);
-					LogInfo("Jugador %d agregado",aux-1);
+		fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">%s</div>\n",players1[aux++]);
+
 	}
-	fprintf(htmlFile, "\t\t\t\t</div>\n");
+	fprintf(htmlFile, "\t\t\t</div>\n");
 	if(attackers != 0){
-		fprintf(htmlFile, "\t\t\t\t<div class=\"row\">\n");
+		fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
 		for(int j=0; j < attackers; j++){
-			fprintf(htmlFile, "\t\t\t\t\t<div class=\"pos\">%s</div>\n", players1[aux++]);
-						LogInfo("Jugador %d agregado del",aux-1);
+		fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">%s</div>\n",players1[aux++]);
 		}
-		fprintf(htmlFile, "\t\t\t\t</div>\n");
+		fprintf(htmlFile, "\t\t\t</div>\n");
 	}
-	fprintf(htmlFile,"\t\t\t</div>\n");	 
-	fprintf(htmlFile,"\t\t</div>\n");	 
-	fprintf(htmlFile, "\t\t\t<div class=\"container\">\n");
-	
-	LogInfo("Todo bien");
+
+
+	fprintf(htmlFile, "\t\t\t<div class=\"team-divider\"></div>\n");
 	
 	defenders = 0;
 	mid = 0;
@@ -115,121 +184,81 @@ int Generator(ProgramNode * initial) {
 
 	aux = defenders + mid + attackers;
 
+	if(initial->info->sport == BASQUET_5 || initial->info->sport == BASQUET_3){
+		aux--;
+	}
+
 	if(attackers != 0){
-		fprintf(htmlFile, "\t\t\t\t<div class=\"row\">\n");
+		fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
 		for(int j=0; j < attackers; j++){
-			fprintf(htmlFile, "\t\t\t\t\t<div class=\"pos\">%s</div>\n", players2[aux--]);
+			LogInfo("trying to add player %d",aux);
+   			fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">%s</div>\n",players2[aux--]);
 						LogInfo("Jugador %d agregado del",aux-1);
 		}
-		fprintf(htmlFile, "\t\t\t\t</div>\n");
+		fprintf(htmlFile, "\t\t\t</div>\n");
 	}
 
-	fprintf(htmlFile, "\t\t\t\t<div class=\"row\">\n");
+	fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
 	for(int j=0; j < mid; j++){
-		fprintf(htmlFile, "\t\t\t\t\t<div class=\"pos\">%s</div>\n", players2[aux--]);
+   			fprintf(htmlFile, "\t\t\t\t<div class=\"player team2\">%s</div>\n",players2[aux--]);
 					LogInfo("Jugador %d agregado",aux-1);
 	}
-	fprintf(htmlFile, "\t\t\t\t</div>\n");
+	fprintf(htmlFile, "\t\t\t</div>\n");
 
-	fprintf(htmlFile, "\t\t\t\t<div class=\"row\">\n");
+	fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
 	for(int j=0; j < defenders; j++){
-		fprintf(htmlFile, "\t\t\t\t\t<div class=\"pos\">%s</div>\n", players2[aux--]);
+   			fprintf(htmlFile, "\t\t\t\t<div class=\"player team2\">%s</div>\n",players2[aux--]);
 		LogInfo("Jugador %d agregado",aux-1);
 	}
 	fprintf(htmlFile, "\t\t\t\t</div>\n");
 
 	if(initial->info->sport != BASQUET_5 && initial->info->sport != BASQUET_3){
-		fprintf(htmlFile, "\t\t\t\t<div class=\"row\">\n");
-		fprintf(htmlFile, "\t\t\t\t\t<div class=\"pos\">%s</div>\n", players2[aux--]);
-		fprintf(htmlFile, "\t\t\t\t</div>\n");
+		fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
+   			fprintf(htmlFile, "\t\t\t\t<div class=\"player team2\">%s</div>\n",players2[aux--]);
+		fprintf(htmlFile, "\t\t\t</div>\n");
 	}
-	fprintf(htmlFile,"\t\t\t</div>\n");	 
-	fprintf(htmlFile,"\t\t</div>\n");	 
-	fprintf(htmlFile, "\t</main>\n");
-	fprintf(htmlFile, "</body>");
 	
-	
-	 fprintf(cssFile, "body {\n");
-    fprintf(cssFile, "    margin: 0 auto;\n");
-    fprintf(cssFile, "    background: #34495e;\n");
-    fprintf(cssFile, "    font-family: \"Open Sans\", sans-serif;\n");
-    fprintf(cssFile, "    cursor: default;\n");
-    fprintf(cssFile, "}\n\n");
 
-    fprintf(cssFile, "header {\n");
-    fprintf(cssFile, "    width: 100%%;\n");
-    fprintf(cssFile, "    color: #eee;\n");
-    fprintf(cssFile, "    border-bottom: 1px solid #eee;\n");
-    fprintf(cssFile, "    font-size: 15px;\n");
-    fprintf(cssFile, "    padding: 20px 70px;\n");
-    fprintf(cssFile, "}\n\n");
-
-    fprintf(cssFile, "main {\n");
-    fprintf(cssFile, "    padding: 40px 50px;\n");
-    fprintf(cssFile, "}\n\n");
-
-    fprintf(cssFile, ".line{\n");
-    fprintf(cssFile, "    width:100%%;\n");
-    fprintf(cssFile, "    background: black;\n");
-    fprintf(cssFile, "    height: 3px;\n");
-    fprintf(cssFile, "    margin-top:10px;\n");
-    fprintf(cssFile, "    margin-bottom:10px;\n");
-    fprintf(cssFile, "}\n\n");
-
-    fprintf(cssFile, ".pitch {\n");
-    fprintf(cssFile, "    background: #26A65B;\n");
-    fprintf(cssFile, "    width: 500px;\n");
-    fprintf(cssFile, "    height: 355px;\n");
-    fprintf(cssFile, "    border-radius: 5px;\n");
-    fprintf(cssFile, "    padding: 20px;\n");
-    fprintf(cssFile, "    margin: 0 16px;\n");
-    fprintf(cssFile, "    display: inline-block;\n");
-    fprintf(cssFile, "    position: relative;\n");
-    fprintf(cssFile, "}\n\n");
-
-    fprintf(cssFile, ".pitch h4 {\n");
-    fprintf(cssFile, "    color: #eee;\n");
-    fprintf(cssFile, "    text-align: center;\n");
-    fprintf(cssFile, "    margin: -20 153px;\n");
-    fprintf(cssFile, "}\n\n");
-
-    fprintf(cssFile, ".pitch .container {\n");
-    fprintf(cssFile, "    display: flex;\n");
-    fprintf(cssFile, "    flex-direction: column;\n");
-    fprintf(cssFile, "    height: 100%%;\n");
-    fprintf(cssFile, "    padding: 5px;\n");
-    fprintf(cssFile, "}\n\n");
-
-    fprintf(cssFile, ".row {\n");
-    fprintf(cssFile, "    display: flex;\n");
-    fprintf(cssFile, "    justify-content: space-around;\n");
-    fprintf(cssFile, "    width: 100%%;\n");
-    fprintf(cssFile, "}\n\n");
-
-    fprintf(cssFile, ".pos {\n");
-    fprintf(cssFile, "    width: 40px;\n");
-    fprintf(cssFile, "    height: 40px;\n");
-    fprintf(cssFile, "    border-radius: 20px;\n");
-    fprintf(cssFile, "    background: #BDC3C7;\n");
-    fprintf(cssFile, "    color: #34495e;\n");
-    fprintf(cssFile, "    text-align: center;\n");
-    fprintf(cssFile, "    line-height: 40px;\n");
-    fprintf(cssFile, "    font-size: 15px;\n");
-    fprintf(cssFile, "    font-weight: 100;\n");
-    fprintf(cssFile, "    transition: .3s linear all;\n");
-    fprintf(cssFile, "    margin: 0 5px;\n");
-    fprintf(cssFile, "}\n\n");
-
-    fprintf(cssFile, ".pos:hover {\n");
-    fprintf(cssFile, "    color: #BDC3C7;\n");
-    fprintf(cssFile, "    background: #34495e;\n");
-    fprintf(cssFile, "}\n");
+    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 1</div>\n");
+    // fprintf(htmlFile, "\t\t\t</div>\n");
+    // fprintf(htmlFile, "\n");
+    // fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
+    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 2</div>\n");
+    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 3</div>\n");
+    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 4</div>\n");
+    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 5</div>\n");
+    // fprintf(htmlFile, "\t\t\t</div>\n");
+    // fprintf(htmlFile, "\n");
+    // fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
+    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 6</div>\n");
+    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 7</div>\n");
+    // fprintf(htmlFile, "\t\t\t\t<div class=\"player team1\">Player 8</div>\n");
+    // fprintf(htmlFile, "\t\t\t</div>\n");
+    // fprintf(htmlFile, "\n");
+    // fprintf(htmlFile, "\t\t\t<div class=\"column\">\n");
+    // fprintf(htmlFile, "\t\t\t\t<div class=\"team-divider\"></div>\n");
+	fprintf(htmlFile, "\t\t\t</div>\n");
+    fprintf(htmlFile, "\t\t<div class=\"info-container\">\n");
+    fprintf(htmlFile, "\t\t\t<h2>Información del Partido</h2>\n");
+	fprintf(htmlFile, "\t\t\t<p>%s VS %s</p>\n", team1Name, team2Name);
+	free(team1Name);
+	free(team2Name);
+	if(initial->info->probabilities->type == PROBABILITY){
+		char * odds = getMatchProbabilities(initial);
+    	fprintf(htmlFile, "\t\t\t<p>%s</p>\n", odds);
+		free(odds);
+	}
+	fprintf(htmlFile, "\t\t\t<p>Formaciones: %s %s</p>\n", formation1, formation2);
+	free(formation1);
+	free(formation2);
+    fprintf(htmlFile, "\t\t</div>\n");
+    fprintf(htmlFile, "\t</div>\n");
+    fprintf(htmlFile, "</body>\n");
+    fprintf(htmlFile, "</html>\n");
 
 
 
 	fclose(htmlFile);
-	fclose(cssFile);
-	
 	 return 0;
 }
 
@@ -329,7 +358,9 @@ char ** getPlayersArray(int team_idx) {
     for (int i = 0; i < playersAmm; i++) {
 		char * name = indexList(playersList,i);
 		resultBuffer[i] = malloc(strlen(name) + 1); 
+		noQuotes(name);
 		strcpy(resultBuffer[i],name);
+		noQuotes(resultBuffer);
 		printf(resultBuffer[i]);
     }
 	
@@ -343,7 +374,8 @@ char * getMatchProbabilities(ProgramNode * initial){
 		return strdup("");
 	}
 	char* resultBuffer = calloc(1, BUFFER_LENGTH * sizeof(char));
-	sprintf(resultBuffer, "Equipo 1 gana: \"%d\", \"Empate\": %d\",  Equipo 2 gana: \"%d\"}", probability->t1_odds, probability->tie_odds, probability->t2_odds);
+	LogInfo("Odds are %d, %d,%d",probability->t1_odds,probability->tie_odds,probability->t2_odds);
+	sprintf(resultBuffer, "Equipo 1 deberia pagar: \"%.2f\", Empate deberia pagar: %.2f\",  Equipo 2 deberia pagar: \"%.2f\"", 100.0/probability->t1_odds, 100.0/probability->tie_odds, 100.0/probability->t2_odds);
 	return resultBuffer;
 }
 
