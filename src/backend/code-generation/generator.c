@@ -307,7 +307,6 @@ int validator(ProgramNode * initial){
 		if(odds1 < 0 || odds2 < 0 || oddsT < 0 || odds1 + odds2 + oddsT != 100){
 			state.succeed = false;
 			state.result = 3;
-					LogError("Linea 139");
 			return  0;
 		}
 	}
@@ -332,7 +331,6 @@ char ** getPlayersArray(int team_idx) {
 		resultBuffer[i] = malloc(strlen(name) + 1); 
 		noQuotes(name);
 		strcpy(resultBuffer[i],name);
-		noQuotes(resultBuffer);
     }
 	
 
