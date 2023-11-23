@@ -36,7 +36,7 @@ token SubtractionOperatorPatternAction();
 token SportAction();
 token SportValueAction(const char * lexeme, const int length);
 token OddsAction();
-token OddsPrecentagesValueAction(const char * lexeme, const int length);
+token OddsPercentagesValueAction(const char * lexeme, const int length);
 token CommaPatternAction();
 token TeamAction();
 token TeamNameAction();

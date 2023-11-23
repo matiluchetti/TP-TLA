@@ -1,12 +1,14 @@
 # Sport JSON Parser
 
 Un compilador para crear formaciones de deportes a partir de un JSON.
+Basado en el compilador "Flex-Bison-Compiler" de Agustin Golmar: https://github.com/agustin-golmar/Flex-Bison-Compiler
+
 
 ## Grupo
 * Mariano Agopian (62317)
 * Matias Luchetti (62337)
-* Sofia Altman (62030)
 * Santiago Medin (62076)
+* Sofia Altman (62030)
 
 ## Sintaxis
 
@@ -184,6 +186,21 @@ En Windows:
 user@machine:path/ $ script\start.bat program
 ```
 
+## Cleam
+Para limpiar los codigos objeto.
+
+En Linux:
+
+```bash
+user@machine:path/ $ script/clean.sh program
+```
+
+En Windows:
+
+```bash
+user@machine:path/ $ script\clean.bat program
+```
+
 
 ## Testing
 
@@ -200,3 +217,6 @@ user@machine:path/ $ script\test.bat
 ```
 
 Si desea agregar nuevos casos de uso, deberá crear un archivo por cada uno, que contenga el programa a testear dentro de las carpetas `test/accept` o `test/reject` según corresponda (es decir, si el mismo debe ser aceptado o rechazado por el compilador).
+
+Si el programa se compila sin errores y pasa las verificaciones, se generara un archivo match.html dentro de la carpeta out en la raiz del proyecto.
+

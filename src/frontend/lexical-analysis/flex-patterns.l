@@ -29,16 +29,16 @@ string          \"[A-Za-z0-9 ]+\"
 <COMMENT>"*/"								{ EndCommentPatternAction(); BEGIN(INITIAL); }
 
 
-"["                                         { return ArrayStartAction(yytext);}
-"]"                                         { return ArrayEndAction(yytext);}
+"["                                         { return ArrayStartAction();}
+"]"                                         { return ArrayEndAction();}
 
-"{"											{ return LCurlyPatternAction(yytext); }
-"}"											{ return RCurlyPatternAction(yytext); }
-":"                                         { return ColonPatternAction(yytext); }
-";"                                         { return SemicolonPatternAction(yytext); }
-","                                         { return CommaPatternAction(yytext); }
+"{"											{ return LCurlyPatternAction(); }
+"}"											{ return RCurlyPatternAction(); }
+":"                                         { return ColonPatternAction(); }
+";"                                         { return SemicolonPatternAction(); }
+","                                         { return CommaPatternAction(); }
 
-"\"deporte\""                               { return SportAction(yytext); }
+"\"deporte\""                               { return SportAction(); }
 "\"Hockey\""                                { return SportValueAction(yytext, yyleng); }
 "\"Basquet 3\""                             { return SportValueAction(yytext, yyleng); }
 "\"Basquet 5\""                             { return SportValueAction(yytext, yyleng); }
