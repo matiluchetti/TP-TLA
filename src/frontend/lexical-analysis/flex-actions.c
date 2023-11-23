@@ -97,7 +97,7 @@ token SportAction() {
 }
 
 
-token SportValueAction(const char * sport, const int length) {
+token SportValueAction(const char * lexeme, const int length) {
 	LogDebug("[Flex] Sport value is: %s", sport);;
 	char * result= calloc(length+1, sizeof(char));
 	strncpy(result, sport, length);
@@ -113,7 +113,7 @@ token OddsAction(){
 	return ODDS; 
 }
 
-token OddsPercentagesValueAction(const char * odds, int length){
+token OddsPercentagesValueAction(const char * lexeme, int length){
 	LogDebug("[Flex] Odds value is: %s", odds);
 	char * result= calloc(length+1, sizeof(char));
 	strncpy(result, odds, length);
@@ -123,7 +123,7 @@ token OddsPercentagesValueAction(const char * odds, int length){
 	return ODDSPERCENTAGES;
 }
 
-token FormationNumberValueAction(const char * formation, int length){
+token FormationNumberValueAction(const char * lexeme, int length){
 	LogDebug("[Flex] Formation value is: %s", formation);
 	char * result= calloc(length+1, sizeof(char));
 	strncpy(result, formation, length);
@@ -176,7 +176,7 @@ token FormationAction(){
 	return FORMATION;
 }
 
-token StringAction(const char * string, int length){
+token StringAction(const char * lexeme, int length){
 LogDebug("[Flex] String value is: %s", string);
 	char * result= calloc(length+1, sizeof(char));
 	strncpy(result, string, length);
