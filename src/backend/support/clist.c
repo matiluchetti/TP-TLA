@@ -5,12 +5,6 @@
 #include <stdint.h>
 #include "clist.h"
 
-
-
-
-// got everything from https://github.com/AlexanderAgd/CLIST/blob/master/clist.c
-
-
 typedef struct
 {
   int count;          /* Number of items in the list. */

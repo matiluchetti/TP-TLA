@@ -25,26 +25,26 @@ string          \"[A-Za-z0-9 ]+\"
 
 
 
-"["                                         { return ArrayStartAction(yytext);}
-"]"                                         { return ArrayEndAction(yytext);}
+"["                                         { return ArrayStartAction();}
+"]"                                         { return ArrayEndAction();}
 
-"{"											{ return LCurlyPatternAction(yytext); }
-"}"											{ return RCurlyPatternAction(yytext); }
-":"                                         { return ColonPatternAction(yytext); }
-";"                                         { return SemicolonPatternAction(yytext); }
-","                                         { return CommaPatternAction(yytext); }
+"{"											{ return LCurlyPatternAction(); }
+"}"											{ return RCurlyPatternAction(); }
+":"                                         { return ColonPatternAction(); }
+";"                                         { return SemicolonPatternAction(); }
+","                                         { return CommaPatternAction(); }
 
-"\"deporte\""                               { return SportAction(yytext); }
-"\"Hockey\""                                { return HOCKEY; }
-"\"Basquet 3\""                               { return BASQUET3; }
-"\"Basquet 5\""                               { return BASQUET5; }
-"\"Futbol 5\""                                { return FUTBOL5; }
-"\"Futbol 8\""                                { return FUTBOL8; }
-"\"Futbol 11\""                                { return FUTBOL11; }
+"\"deporte\""                               { return SportAction(); }
+"\"Hockey\""                                { return SportValueAction(yytext, yyleng); }
+"\"Basquet 3\""                             { return SportValueAction(yytext, yyleng); }
+"\"Basquet 5\""                             { return SportValueAction(yytext, yyleng); }
+"\"Futbol 5\""                              { return SportValueAction(yytext, yyleng); }
+"\"Futbol 8\""                              { return SportValueAction(yytext, yyleng); }
+"\"Futbol 11\""                             { return SportValueAction(yytext, yyleng); }
 
 "\"probabilidades\""                        { return OddsAction(); }
-\"[0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"        { return ODDSPERCENTAGES;}
-\"[1-5]-[1-5](-[1-5])?\"                    { return FORMATIONNUMBER;}
+\"[0-9][0-9]-[0-9][0-9]-[0-9][0-9]\"        { return OddsPercentagesValueAction(yytext, yyleng);}
+\"[1-5]-[1-5](-[1-5])?\"                    { return FormationNumberValueAction(yytext,yyleng);}
 
 
 "\"equipos\""                               { return TeamAction();}

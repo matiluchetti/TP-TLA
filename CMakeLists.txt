@@ -38,7 +38,7 @@ elseif (CMAKE_C_COMPILER_ID STREQUAL "MSVC")
 		COMMAND flex --wincompat -o ../src/frontend/lexical-analysis/flex-scanner.c ../src/frontend/lexical-analysis/flex-patterns.l
 		DEPENDS ../src/frontend/syntactic-analysis/bison-parser.c ../src/frontend/syntactic-analysis/bison-parser.h)
 
-elseif (CMAKE_C_COMPILER_ID STREQUAL "Clang")
+elseif (CMAKE_C_COMPILER_ID STREQUAL "AppleClang")
 	message(NOTICE "El compilador de C es LLVM Clang.")
 
 	# Opciones para Clang.
@@ -63,10 +63,14 @@ add_executable(Compiler
 	src/backend/code-generation/generator.c
 	src/backend/domain-specific/calculator.c
 	src/backend/support/logger.c
+	src/backend/semantic-analysis/symbol-table.c
+	src/backend/support/table-list.c
+
 	src/frontend/lexical-analysis/flex-actions.c
 	src/frontend/lexical-analysis/flex-scanner.c
 	src/frontend/syntactic-analysis/bison-actions.c
 	src/frontend/syntactic-analysis/bison-parser.c
+
 	# Agregar otros archivos *.c (si no se incluyen, no se compilan).
 	# ...
 )

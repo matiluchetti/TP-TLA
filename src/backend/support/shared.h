@@ -12,7 +12,7 @@ extern FILE * yyout;
 
 // La cantidad de caracteres en el lexema "yytext". Se debe leer en las
 // acciones de Flex, no en Bison.
-extern int yyleng;
+extern unsigned long yyleng;
 
 // Variable global que contiene el número de la línea analizada.
 extern int yylineno;
@@ -49,7 +49,7 @@ typedef struct {
 	int result;
 
 	// El nodo raíz del AST (se usará cuando se implemente el backend).
-	Program * program;
+	ProgramNode * program;
 
 	// Agregar lo que sea necesario para el compilador.
 	// Agregar una pila para manipular scopes.

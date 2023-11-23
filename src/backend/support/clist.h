@@ -1,14 +1,6 @@
 #ifndef CLIST_H
 #define CLIST_H
 
-
-//got everything from https://github.com/AlexanderAgd/CLIST/blob/master/clist.h
-
-
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct CList
 {
   void * (* add)         (struct CList *l, void *o);            /* Add object to the end of a list */
@@ -65,9 +57,5 @@ CList *CList_init(size_t objSize); /* Set list object size in bytes */
         Supported types: char, short, int, long, uintptr_t, size_t, double, string.
         If type is NULL just pointers data will be printed. 
 */
-
-#ifdef __cplusplus
-}
-#endif
 
 #endif /* CLIST_H */
