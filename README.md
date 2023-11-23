@@ -192,13 +192,13 @@ Para limpiar los codigos objeto.
 En Linux:
 
 ```bash
-user@machine:path/ $ script/clean.sh program
+user@machine:path/ $ script/clean.sh 
 ```
 
 En Windows:
 
 ```bash
-user@machine:path/ $ script\clean.bat program
+user@machine:path/ $ script\clean.bat 
 ```
 
 
